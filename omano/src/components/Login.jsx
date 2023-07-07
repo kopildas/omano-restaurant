@@ -1,19 +1,22 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import Signup from "./Signup";
 import OAuth from "./OAuth";
+import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
+import { toast } from "react-toastify";
+import { Navigate } from "react-router-dom";
 
 export default function Login({ toggle }) {
   const [showPassword, setShowPassword] = useState(false);
-
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
-  const { username, password } = formData;
-// this function did not work it cant save state data and show it in dev
+  const { email, password } = formData;
+  // this function did not work it cant save state data and show it in dev
   function onChange(e) {
     setFormData((prevState) => ({
       ...prevState,
@@ -21,9 +24,20 @@ export default function Login({ toggle }) {
     }));
   }
 
-  function handleLogin(e) {
+  //function for handling form submitting
+  async function handleLogin(e) {
     e.preventDefault();
     // Code to handle login goes here
+    try {
+      const auth = getAuth()
+      const userCredential = await signInWithEmailAndPassword(auth,email,password)
+      if(userCredential.user)
+      {
+        navigate("/")
+      }
+    } catch (error) {
+      toast.error("Bad user credential")
+    }
     toggle();
   }
 
@@ -33,12 +47,12 @@ export default function Login({ toggle }) {
         <h2 className="text-2xl text-center mb-6">Login</h2>
         <form onSubmit={handleLogin}>
           <div className="mb-4">
-            <label htmlFor="username">Username:</label>
+            <label htmlFor="email">Email:</label>
             <input
               className="input-field w-full"
               type="text"
-              id="username"
-              value={username}
+              id="email"
+              value={email}
               onChange={onChange}
             />
           </div>
