@@ -1,20 +1,23 @@
-
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import OAuth from "../components/OAuth";
 import Login from "../components/Login";
+import { toast } from "react-toastify";
+import { Navigate } from "react-router-dom";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+
+
+
+
 
 export default function ForgotPassword() {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
+    email: ""
   });
 
-  const { username, email, password } = formData;
+  const { email } = formData;
 
   const handleInputChange = (e) => {
     setFormData((prevState) => ({
@@ -23,9 +26,16 @@ export default function ForgotPassword() {
     }));
   };
 
-  const handleLogin = (e) => {
+  async function handlesubmit (e) {
     e.preventDefault();
     // Code to handle login goes here
+    try {
+      const auth = getAuth()
+      await sendPasswordResetEmail(auth,email)
+      toast.success("Email was sent")
+    } catch (error) {
+      toast.error("could not send reset password")
+    }
   };
 
   const togglePop = () => {
@@ -38,7 +48,7 @@ export default function ForgotPassword() {
     <div className="flex justify-center min-h-screen bg-cover bg-center bg-no-repeat bg-fixed" style={{ backgroundImage: `url("./pasta.jpg")` }}>
       <div className="w-full max-w-sm bg-white rounded-lg p-6 grid">
         <h2 className="text-2xl text-center mb-6">Login</h2>
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handlesubmit}>
           
           <label className="mb-4">
             Email:
