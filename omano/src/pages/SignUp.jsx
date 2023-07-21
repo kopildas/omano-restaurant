@@ -3,14 +3,15 @@ import { Link } from "react-router-dom";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import OAuth from "../components/OAuth";
 import Login from "../components/Login";
-import { getAuth, createUserWithEmailAndPassword,updateProfile } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 import { db } from "../firebase";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
-
-
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,11 +19,12 @@ export default function SignUp() {
     username: "",
     email: "",
     password: "",
+    phone: "",
   });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const { username, email, password } = formData;
+  const { username, email, password, phone } = formData;
 
   const handleInputChange = (e) => {
     setFormData((prevState) => ({
@@ -33,7 +35,7 @@ export default function SignUp() {
 
   async function handleSignup(e) {
     e.preventDefault();
-
+  
     // for authentication using firebase auth
     try {
       const auth = getAuth();
@@ -42,21 +44,24 @@ export default function SignUp() {
         email,
         password
       );
-      updateProfile(auth.currentUser, {
-        displayName:username
-      })
+  
+      await updateProfile(auth.currentUser, {
+        displayName: username,
+        phoneNumber: phone,
+      });
+      console.log(auth.currentUser.phoneNumber);
       const user = userCredential.user;
-      const formDataCopy = {...formData};
+      const formDataCopy = { ...formData };
       delete formDataCopy.password;
       formDataCopy.timestamp = serverTimestamp();
-
+  
       //save into firebase storeage
-      await setDoc(doc(db, "users", user.uid), formDataCopy)
-
+      await setDoc(doc(db, "users", user.uid), formDataCopy);
+  
       // redirect to home page
-      navigate("/")
+      navigate("/");
     } catch (error) {
-      toast.error("Something went wrong with the registration!")
+      toast.error("Something went wrong with the registration!");
     }
   }
   const [seen, setSeen] = useState(false);
@@ -89,6 +94,16 @@ export default function SignUp() {
               type="email"
               id="email"
               value={email}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label className="mb-4">
+            Phone:
+            <input
+              className="input-field w-full"
+              type="text"
+              id="phone"
+              value={phone}
               onChange={handleInputChange}
             />
           </label>
