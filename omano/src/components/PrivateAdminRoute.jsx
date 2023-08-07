@@ -5,9 +5,9 @@ import Login from "./Login";
 import Spinner from "./Spinner";
 import Admin from "../pages/Admin/Admin";
 import { initialState } from "../context/initialState";
-import Profile from "../pages/Profile";
+import Home from "../pages/Home";
 
-export default function PrivateRoute() {
+export default function PrivateAdminRoute() {
   const { loggedIn, checkingStatus, idd } = useAuthStatus();
   if (checkingStatus) {
     return <Spinner />;
@@ -17,16 +17,12 @@ export default function PrivateRoute() {
   const em= initialState.user.email;
   console.log(em);
   // return loggedIn ? <Outlet /> : <Navigate to = "/sign-up" />;
-  if (loggedIn) {
-    if (em === "kopildas451@gmail.com") {
-      console.log(em);
-      return <Admin />;
-    } else {
-      console.log(em);
-      return <Profile />;
-    }
+  if (loggedIn && em === "kopildas451@gmail.com") {
+    
+      return <Outlet />;
+    
   } else {
-    return <Login />;
+    return <Home />;
   }
   // return loggedIn ? <Outlet /> : <Login/>;
 }

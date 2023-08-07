@@ -33,6 +33,8 @@ export default function Login({ toggle }) {
       const userCredential = await signInWithEmailAndPassword(auth,email,password)
       if(userCredential.user)
       {
+        console.log(userCredential.user);
+        console.log("hola");
         navigate("/")
       }
     } catch (error) {
