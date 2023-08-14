@@ -22,8 +22,30 @@ import Users from "./pages/Admin/Users";
 import Wallet from "./pages/Admin/Wallet";
 import PrivateAdminRoute from "./components/PrivateAdminRoute";
 import Sidebar from "./components/admin_comp/Sidebar";
+import { useStateValue } from "./context/StateProvider";
+import { getAllFoodItems } from "./utils/firebaseFunctions";
+import { actionType } from "./context/reducer";
 
 function App() {
+
+  const [{foodItem},dispatch] = useStateValue();
+
+  const fetchData = async () => {
+    await getAllFoodItems().then((data)=>{
+      dispatch({
+        type: actionType.SET_FOOD_ITEMS,
+      foodItem:data,
+      })
+    })
+  }
+
+  useEffect(() => {
+      fetchData();
+    }, [])
+
+
+
+
   return (
     <>
       <Router>

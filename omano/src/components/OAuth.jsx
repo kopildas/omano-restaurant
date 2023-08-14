@@ -56,9 +56,9 @@ export default function OAuth() {
     <button
       type='button'
       onClick={byGoogle}
-      className='flex items-center justify-center w-full bg-red-700 text-white px-7 py-3 uppercase text-sm font-medium hover:bg-red-800 active:bg-red-900 shadow-md hover:shadow-lg rounded transition duration-150 ease-in-out'
+      className='flex items-center justify-center w-full py-3 text-sm font-medium text-white uppercase transition duration-150 ease-in-out bg-red-700 rounded shadow-md px-7 hover:bg-red-800 active:bg-red-900 hover:shadow-lg'
     >
-      <FcGoogle className='text-2xl bg-white rounded mx-1' /> continue with Google account
+      <FcGoogle className='mx-1 text-2xl bg-white rounded' /> continue with Google account
     </button>
   );
 }

@@ -4,4 +4,5 @@ const userInfo=fetchLocalStorageData()
 
 export const initialState = {
     user: userInfo,
+    foodItem: null,
 }
