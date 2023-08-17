@@ -7,8 +7,11 @@ module.exports = {
   theme: {
     extend: {},
   },
+  colors: {
+    card: "rgba(256,256,256,0.6)"
+  },
   plugins: [
-    require('@tailwindcss/forms')
+    require('@tailwindcss/forms'),
+    require('tailwind-scrollbar')
   ],
 }
-

@@ -15,6 +15,15 @@ import { MdDeleteForever } from "react-icons/md";
 import { db, storage } from "../../firebase";
 import { saveItem } from "../../utils/firebaseFunctions";
 
+export const category = [
+  { value: "Fast Food", label: "../public/images/burg.png" },
+  { value: "Lunch", label: "../public/images/lunch.png" },
+  { value: "Dinner", label: "../public/images/dinner.png" },
+  { value: "Chicken", label: "../public/images/chicken.png" },
+  { value: "Drink & Juice", label: "../public/images/juice.png" },
+  { value: "Ice-Cream", label: "../public/images/ice.png" },
+];
+
 export default function Add_popup({ visible, onClose }) {
   const auth = getAuth();
   const user = auth.currentUser;
