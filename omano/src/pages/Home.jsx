@@ -9,6 +9,8 @@ import Menu from '../components/home/Menu'
 
 export default function Home() {
 
+  /* The line `const [{foodItem},dispatch] = useStateValue();` is using the `useStateValue` hook from
+  the context provider to access the `foodItem` state and the `dispatch` function. */
   const [{foodItem},dispatch] = useStateValue();
   const [scrollValue, setscrollValue] = useState(0)
 
@@ -17,7 +19,7 @@ export default function Home() {
   }, [scrollValue])
   
   const lunchItems = foodItem?.filter((n) => n.category === "Lunch");
-
+console.log(foodItem);
   return (
     <div>
       <Hero/>

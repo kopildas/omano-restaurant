@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import React, { useEffect, useRef } from "react";
 import { MdShoppingBasket } from "react-icons/md";
 
-export default function RowContainer({ flag, data, scrollValue }) {
+export default function RowContainer({ flag, data, scrollValue,gridORlist=true }) {
   console.log(data);
   const rowContainer = useRef();
   useEffect(() => {
@@ -16,13 +16,13 @@ export default function RowContainer({ flag, data, scrollValue }) {
         flag
           ? "overflow-x-scroll scrollbar-none"
           : "overflow-x-hidden flex flex-wrap justify-center"
-      }`}
+      } ${gridORlist? null: "flex-col"}`}
     >
       {data &&
         data.map((item) => (
           <div
             key={item?.id}
-            className="w-1 md:w-340 min-w-[280px] h-auto bg-gray-100 rounded-lg p-2 my-12 backdrop-blur-lg hover:drop-shadow-2xl"
+            className="w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 min-w-[220px] h-auto bg-gray-100 rounded-lg p-2 my-12 backdrop-blur-lg hover:drop-shadow-2xl"
           >
             <div className="flex items-center justify-between w-full">
               <motion.img

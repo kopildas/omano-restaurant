@@ -107,11 +107,12 @@
 }
 
 .cover_1 {
-  background: url(../public/images/foodCover2.jpg) no-repeat center;
-  /* opacity: 70%; */
-  background-blend-mode:darken;
-  color: #000000;
+  background: url(../public/images/roasted-pork-steak-dark-wooden-s.jpg) no-repeat center;
+  height: 40vh;
+  color: #fff;
   /* min-height: 500px; */
   background-size: cover;
+  background-attachment: fixed;
+  font-family: "Ubuntu", sans-serif;
   
 }

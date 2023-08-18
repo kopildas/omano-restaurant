@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home";
+import Foods from "./pages/Foods"
 import Profile from "./pages/Profile";
 import Signin from "./pages/Signin";
 import SignUp from "./pages/SignUp";
@@ -54,6 +55,7 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/foods" element={<Foods />} />
           <Route path="/profile" element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
             {/* <Route path="/admin" element={<Admin/>} /> */}
@@ -63,7 +65,7 @@ function App() {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
         
-          {/* <Sidebar /> */}
+          {/* for admin pannel */}
           <Route path="/admin" element={<PrivateRoute />}>
             {/* <Route path="/profile" element={<Profile />} /> */}
             <Route path="/admin" element={<Admin />} />
