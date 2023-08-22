@@ -26,6 +26,7 @@ import Sidebar from "./components/admin_comp/Sidebar";
 import { useStateValue } from "./context/StateProvider";
 import { getAllFoodItems } from "./utils/firebaseFunctions";
 import { actionType } from "./context/reducer";
+import SingleFood from "./pages/SingleFood";
 
 function App() {
 
@@ -42,6 +43,7 @@ function App() {
 
   useEffect(() => {
       fetchData();
+      console.log("fetching data");
     }, [])
 
 
@@ -56,6 +58,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/foods" element={<Foods />} />
+          <Route path="/singlefood/:id" element={<SingleFood />} />
           <Route path="/profile" element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
             {/* <Route path="/admin" element={<Admin/>} /> */}

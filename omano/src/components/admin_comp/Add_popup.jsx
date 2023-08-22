@@ -17,8 +17,8 @@ import { saveItem } from "../../utils/firebaseFunctions";
 
 export const category = [
   { value: "Fast Food", label: "../public/images/burg.png" },
-  { value: "Lunch", label: "../public/images/lunch.png" },
-  { value: "Dinner", label: "../public/images/dinner.png" },
+  { value: "Biriyani", label: "../public/images/lunch.png" },
+  { value: "Pasta", label: "../public/images/dinner.png" },
   { value: "Chicken", label: "../public/images/chicken.png" },
   { value: "Drink & Juice", label: "../public/images/juice.png" },
   { value: "Ice-Cream", label: "../public/images/ice.png" },
@@ -31,8 +31,11 @@ export default function Add_popup({ visible, onClose }) {
 
   const options = [
     { value: "Fast Food", label: "🍔 Fast Food" },
-    { value: "Dinner", label: "🍽 Dinner" },
-    { value: "Lunch", label: "🍽 Lunch" },
+    { value: "Chicken", label: "🍗 Chicken" },
+    { value: "Biriyani", label: "🍚 Biriyani" },
+    { value: "Pasta", label: "🍝 Pasta" },
+    { value: "Icecream", label: "🍦Ice-Cream" },
+    { value: "Drinks", label: "🍹Drinks & Juice" },
   ];
 
   const [loading, setLoading] = useState(false);

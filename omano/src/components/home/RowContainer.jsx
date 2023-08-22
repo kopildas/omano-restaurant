@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import React, { useEffect, useRef } from "react";
 import { MdShoppingBasket } from "react-icons/md";
+import { NavLink } from "react-router-dom";
 
 export default function RowContainer({ flag, data, scrollValue,gridORlist=true }) {
   console.log(data);
@@ -22,14 +23,15 @@ export default function RowContainer({ flag, data, scrollValue,gridORlist=true }
         data.map((item) => (
           <div
             key={item?.id}
-            className="w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 min-w-[220px] h-auto bg-gray-100 rounded-lg p-2 my-12 backdrop-blur-lg hover:drop-shadow-2xl"
+            className="w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 min-w-[220px] h-auto bg-gray-100 rounded-lg p-2 my-5 backdrop-blur-lg hover:drop-shadow-2xl"
           >
+            <NavLink to={`/singlefood/${item?.id}`}>
             <div className="flex items-center justify-between w-full">
               <motion.img
                 whileTap={{ scale: 1.2 }}
                 src={item?.images}
                 alt=""
-                className="w-40 -mt-8 drop-shadow-2xl"
+                className="w-40 h-40 rounded-full -mt-8 drop-shadow-2xl"
               />
               <motion.div
                 whileTap={{ scale: 0.75 }}
@@ -48,6 +50,7 @@ export default function RowContainer({ flag, data, scrollValue,gridORlist=true }
                 </p>
               </div>
             </div>
+            </NavLink>
           </div>
         ))}
     </div>
