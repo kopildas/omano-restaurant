@@ -10,9 +10,8 @@ import { toast } from "react-toastify";
 import Spinner from "../Spinner";
 
 import { getAuth } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
 import { MdDeleteForever } from "react-icons/md";
-import { db, storage } from "../../firebase";
+import { storage } from "../../firebase";
 import { saveItem } from "../../utils/firebaseFunctions";
 
 export const category = [
@@ -27,7 +26,6 @@ export const category = [
 export default function Add_popup({ visible, onClose }) {
   const auth = getAuth();
   const user = auth.currentUser;
-
 
   const options = [
     { value: "Fast Food", label: "🍔 Fast Food" },
@@ -46,8 +44,10 @@ export default function Add_popup({ visible, onClose }) {
     sale: "",
     price: "",
     category: "",
+    quantity: 1,
+    cartORadd : "cart"
   });
-  const { item_name, sale, price, category, images } = formData;
+  const { item_name, sale, price, category, images, quantity } = formData;
 
   const handleChange = (value) => {
     console.log(value);
@@ -110,44 +110,43 @@ export default function Add_popup({ visible, onClose }) {
   };
 
   const delImage = () => {
-    if(user)
-    {
+    if (user) {
       // setFileLoading(true);
-    console.log("holo");
-    console.log(images);
-    const decodedUrl = decodeURIComponent(images);
-    const pathStartIndex = decodedUrl.indexOf("/o/") + 3; // Adding 3 to exclude '/o/'
-    const pathEndIndex = decodedUrl.indexOf("?"); // Find the end of the path
-    const imagePath = decodedUrl.slice(pathStartIndex, pathEndIndex);
+      console.log("holo");
+      console.log(images);
+      const decodedUrl = decodeURIComponent(images);
+      const pathStartIndex = decodedUrl.indexOf("/o/") + 3; // Adding 3 to exclude '/o/'
+      const pathEndIndex = decodedUrl.indexOf("?"); // Find the end of the path
+      const imagePath = decodedUrl.slice(pathStartIndex, pathEndIndex);
 
-    console.log(imagePath);
-    const deletRef = ref(storage, images);
-console.log(deletRef);
-    deleteObject(deletRef)
-      .then(() => {
-        // setFormData((prevState) => ({
-        // ...prevState,
-        //   images: "",
-        // }));
-        console.log("del holo");
-        setFileLoading(false);
-        toast.error("Image deleted successfully");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    // console.log("holo kih");
-    // deletRef.delete().then(() => {
-    //   // setFormData((prevState) => ({
-    //   // ...prevState,
-    //   //   images: "",
-    //   // }));
-    //   console.log("del holo");
-    //   setFileLoading(false);
-    //   toast.success("Image deleted successfully");
-    // }).catch((error) => {
-    //   console.log(error);
-    // });
+      console.log(imagePath);
+      const deletRef = ref(storage, images);
+      console.log(deletRef);
+      deleteObject(deletRef)
+        .then(() => {
+          // setFormData((prevState) => ({
+          // ...prevState,
+          //   images: "",
+          // }));
+          console.log("del holo");
+          setFileLoading(false);
+          toast.error("Image deleted successfully");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      // console.log("holo kih");
+      // deletRef.delete().then(() => {
+      //   // setFormData((prevState) => ({
+      //   // ...prevState,
+      //   //   images: "",
+      //   // }));
+      //   console.log("del holo");
+      //   setFileLoading(false);
+      //   toast.success("Image deleted successfully");
+      // }).catch((error) => {
+      //   console.log(error);
+      // });
     }
   };
 
@@ -187,13 +186,13 @@ console.log(deletRef);
       return;
     }
 
+    //data saving method calling
     // await setDoc(doc(db, "foodItems", `${Date.now()}`), formData);
     saveItem(formData);
     console.log("kire");
     setTimeout(() => {
       setLoading(false);
-
-    },2000);
+    }, 2000);
 
     // Include the selected foods category in the formData object
     // const updatedFormData = {

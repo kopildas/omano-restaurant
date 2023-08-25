@@ -4,6 +4,7 @@ import { useParams } from "react-router";
 import { useStateValue } from "../context/StateProvider";
 import Description from "../components/home/Description";
 import Review from "../components/home/Review";
+import CartContainer from "../components/home/CartContainer";
 
 export default function SingleFood() {
   const bar = ">>";
@@ -11,7 +12,7 @@ export default function SingleFood() {
   console.log(id);
   const [{ foodItem }, dispatch] = useStateValue();
   const [number, setNumber] = useState(0);
-  const[view,setView] = useState("description");
+  const [view, setView] = useState("description");
 
   useEffect(() => {
     if (foodItem != null) {
@@ -78,26 +79,36 @@ export default function SingleFood() {
         </div>
       </div>
 
+      {/* review and descriptions */}
+      <div className="flex flex-col gap-5 pr-32 pl-32 pb-32 h-[100%]">
+        <div className="flex flex-row gap-6">
+          <p
+            className={`font-semibold text-xl border-b-2 ${
+              view === "description" ? "border-b-red-600" : ""
+            }  cursor-pointer hover:border-b-red-600 transition duration-150 ease-in-out`}
+            onClick={() => setView("description")}
+          >
+            Description
+          </p>
+          <p
+            className={`font-semibold text-xl border-b-2 ${
+              view === "review" ? "border-b-red-600" : ""
+            }  cursor-pointer hover:border-b-red-600 transition duration-150 ease-in-out`}
+            onClick={() => setView("review")}
+          >
+            Review
+          </p>
+        </div>
+        <div>{view === "description" ? <Description /> : <Review />}</div>
+      </div>
 
-{/* review and descriptions */}
-<div className="flex flex-col gap-5 pr-32 pl-32 pb-32 h-[100%]">
-  <div className="flex flex-row gap-6">
-    <p className={`font-semibold text-xl border-b-2 ${view==="description" ? "border-b-red-600" : ""}  cursor-pointer hover:border-b-red-600 transition duration-150 ease-in-out`} onClick={() => setView("description")}>Description</p>
-    <p className={`font-semibold text-xl border-b-2 ${view==="review" ? "border-b-red-600" : ""}  cursor-pointer hover:border-b-red-600 transition duration-150 ease-in-out`} onClick={() => setView("review")}>Review</p>
-  </div>
-  <div>
-  {view === "description"? <Description/> : <Review/> }
-  </div>
-</div>
+      {/* give review */}
 
-
-{/* give review */}
-
-<div className="flex flex-col gap-5 pr-32 pl-32 pb-32 h-[100%]">
-  <p className="font-bold text-2xl">Leave a Review</p>
-  <p>Add your Rating</p>
-  <form className="flex flex-col gap-5">
-    {/* <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 pr-32 pl-32 pb-32 h-[100%]">
+        <p className="font-bold text-2xl">Leave a Review</p>
+        <p>Add your Rating</p>
+        <form className="flex flex-col gap-5">
+          {/* <div className="flex flex-col gap-5">
       <label className="font-semibold">Rating</label>
       <select className="w-full">
         <option value="1">1</option>
@@ -111,34 +122,44 @@ export default function SingleFood() {
       <label className="font-semibold">Title</label>
       <input type="text" className="w-full" placeholder="Title" />
     </div> */}
-    <div className="flex flex-col gap-5">
-      <label className="font-semibold">Description</label>
-      <textarea className="w-full h-36 rounded-md" placeholder="Description"></textarea>
-    </div>
-    <div className="flex flex-row gap-5 w-full">
-      <div className="w-full">
-      <label className="font-semibold">Name</label>
-      <input type="text" className="w-full rounded-md" placeholder="Name" />
+          <div className="flex flex-col gap-5">
+            <label className="font-semibold">Description</label>
+            <textarea
+              className="w-full h-36 rounded-md"
+              placeholder="Description"
+            ></textarea>
+          </div>
+          <div className="flex flex-row gap-5 w-full">
+            <div className="w-full">
+              <label className="font-semibold">Name</label>
+              <input
+                type="text"
+                className="w-full rounded-md"
+                placeholder="Name"
+              />
+            </div>
+            <div className="w-full">
+              <label className="font-semibold">Email</label>
+              <input
+                type="email"
+                className="w-full rounded-md"
+                placeholder="Email"
+              />
+            </div>
+          </div>
+          <div className="flex flex-row gap-5">
+            <button className="bg-red-300 rounded-md p-2 font-semibold hover:bg-red-500 transition duration-150 ease-in-out">
+              Submit
+            </button>
+          </div>
+        </form>
       </div>
-      <div className="w-full">
-      <label className="font-semibold">Email</label>
-      <input type="email" className="w-full rounded-md" placeholder="Email" />
+
+      {/* related foods */}
+      <div className="flex flex-col gap-5 pr-32 pl-32 pb-32 h-[100%]">
+        <p className="font-bold text-2xl">Related Foods</p>
       </div>
-    </div>
-    <div className="flex flex-row gap-5">
-      <button className="bg-red-300 rounded-md p-2 font-semibold hover:bg-red-500 transition duration-150 ease-in-out">
-        Submit
-      </button>
-    </div>
-  </form>
-</div>
-
-
-{/* related foods */}
-<div className="flex flex-col gap-5 pr-32 pl-32 pb-32 h-[100%]">
-<p className="font-bold text-2xl">Related Foods</p>
-</div>
-
+      <CartContainer/>
     </div>
   );
 }
