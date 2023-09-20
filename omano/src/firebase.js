@@ -1,20 +1,21 @@
-// Import the functions you need from the SDKs you need
+  // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import {getFirestore} from "firebase/firestore"
 import { getStorage } from "firebase/storage";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyChy0Z_BtJP_9Bc0sWUuwzVqxuI9Dpglas",
-  authDomain: "omano-df188.firebaseapp.com",
-  projectId: "omano-df188",
-  storageBucket: "omano-df188.appspot.com",
-  messagingSenderId: "216682965254",
-  appId: "1:216682965254:web:52874618ffefd456751687"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
-
+console.log(import.meta.env.VITE_FIREBASE_API_KEY);
 // Initialize Firebase
 initializeApp(firebaseConfig);
 const storage = getStorage()

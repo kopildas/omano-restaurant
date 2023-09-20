@@ -13,6 +13,7 @@ import { getAuth } from "firebase/auth";
 import { MdDeleteForever } from "react-icons/md";
 import { storage } from "../../firebase";
 import { saveItem } from "../../utils/firebaseFunctions";
+import { addNewProduct } from "../../api";
 
 export const category = [
   { value: "Fast Food", label: "../public/images/burg.png" },
@@ -23,7 +24,7 @@ export const category = [
   { value: "Ice-Cream", label: "../public/images/ice.png" },
 ];
 
-export default function Add_popup({ visible, onClose }) {
+export default function Add_popup({ visible, onClose,addDataNotifi }) {
   const auth = getAuth();
   const user = auth.currentUser;
 
@@ -47,7 +48,8 @@ export default function Add_popup({ visible, onClose }) {
     quantity: 1,
     cartORadd : "cart"
   });
-  const { item_name, sale, price, category, images, quantity } = formData;
+  console.log(formData);
+  const { item_name, sale, price, category, images } = formData;
 
   const handleChange = (value) => {
     console.log(value);
@@ -62,6 +64,9 @@ export default function Add_popup({ visible, onClose }) {
 
   const handleOnChange = (e) => {
     if (e.target.id === "cont" || e.target.id === "close") {
+      if(images){
+        delImage();
+      }
       onClose();
     }
   };
@@ -162,19 +167,23 @@ export default function Add_popup({ visible, onClose }) {
         [e.target.id]: e.target.value,
       }));
     }
-    console.log(formData.category);
+    console.log(formData);
   }
   formData = {
     ...formData,
-    category: foods?.value || "", // If no foods is selected, default to an empty string
+    category: foods?.value || "",
+    cartORadd: "cart",
+    quantity:1, // If no foods is selected, default to an empty string
   };
+
+
   async function onSubmit(e) {
     e.preventDefault();
     setLoading(true);
     console.log(images);
 
     // console.log(updatedFormData);
-    console.log(formData.category);
+    console.log(formData);
     if (!item_name || !sale || !price || !formData.category || !images) {
       console.log(item_name);
       console.log(sale);
@@ -185,14 +194,26 @@ export default function Add_popup({ visible, onClose }) {
       toast.error("Please fill all the fields");
       return;
     }
+    // formData = {
+    //   ...formData,
+    //   cartORadd: "cart",
+    //   quantity:1,
+    //    // If no foods is selected, default to an empty string
+    // };
 
+    console.log(formData);
     //data saving method calling
     // await setDoc(doc(db, "foodItems", `${Date.now()}`), formData);
-    saveItem(formData);
+    // saveItem(formData);
+    addNewProduct(formData).then((res)=>{
+      console.log(res);
+      console.log("holo ");
+    })
     console.log("kire");
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+      addDataNotifi();
+    }, 3000);
 
     // Include the selected foods category in the formData object
     // const updatedFormData = {
@@ -215,6 +236,7 @@ export default function Add_popup({ visible, onClose }) {
     });
     SetFoods(null);
 
+    //sending notification via props to perent
     // Close the popup
     onClose();
     toast.success("Item has been uploaded successfully");
@@ -230,7 +252,7 @@ export default function Add_popup({ visible, onClose }) {
     <div
       id="cont"
       onClick={handleOnChange}
-      className="fixed inset-0 flex items-center justify-center k bg-opacity-5 backdrop-blur-sm"
+      className="fixed inset-0 flex items-center justify-center bg-opacity-5 backdrop-blur-sm"
     >
       <div className="w-5/12 p-4 bg-white rounded-lg md:p-6">
         <h1 className="text-xl font-semibold text-center text-gray-700 md-5">

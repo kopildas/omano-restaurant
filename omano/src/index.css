@@ -1,3 +1,13 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,body {
+  scroll-behavior: smooth;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -105,14 +115,52 @@
   background-attachment: fixed;
   font-family: "Ubuntu", sans-serif;
 }
-
+@media only screen and (max-width: 600px) {
+  .home {
+    height: 50vh;
+  }
+}
 .cover_1 {
-  background: url(../public/images/roasted-pork-steak-dark-wooden-s.jpg) no-repeat center;
+  background: url(../public/images/roasted-pork-steak-dark-wooden-s.jpg)
+    no-repeat center;
   height: 40vh;
   color: #fff;
   /* min-height: 500px; */
   background-size: cover;
   background-attachment: fixed;
   font-family: "Ubuntu", sans-serif;
-  
+}
+
+/* Add your CSS class for available tables */
+.table-available {
+  background-color: rgb(
+    64,
+    111,
+    64
+  ); /* Change the background color for available tables */
+  color: white; /* Change the text color for available tables */
+  /* Add any other styles you want for available tables */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.table-available:hover {
+  background-color: rgb(63, 179, 63); /* Change the background color on hover */
+  /* Apply a 2px blur effect on hover */
+}
+.table-available.clicked {
+  background-color: rgb(19, 85, 19); /* Change the background color when clicked */
+}
+/* Define styles for booked tables */
+/* You can override these styles as needed for booked tables */
+.table-booked {
+  background-color: rgb(117, 28, 28); /* Change the background color for booked tables */
+  color: white; /* Change the text color for booked tables */
+  /* Add any other styles you want for booked tables */
+}
+
+.table-selected {
+  background-color: rgb(0, 66, 45); /* Change the background color for available tables */
+  color: white; /* Change the text color for available tables */
+  /* Add any other styles you want for available tables */
+  cursor: pointer;
 }

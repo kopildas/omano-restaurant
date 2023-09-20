@@ -5,6 +5,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import "./App.css";
+import "../src/components/home/Reservation/Calender.css";
 import Home from "./pages/Home";
 import Foods from "./pages/Foods"
 import Profile from "./pages/Profile";
@@ -27,9 +28,14 @@ import { useStateValue } from "./context/StateProvider";
 import { getAllFoodItems } from "./utils/firebaseFunctions";
 import { actionType } from "./context/reducer";
 import SingleFood from "./pages/SingleFood";
+import { getAuth } from "firebase/auth";
+import { validateUserJWTTOken } from "./api";
+
+
 
 function App() {
 
+  const auth = getAuth();
   const [{foodItem},dispatch] = useStateValue();
 
   const fetchData = async () => {
@@ -42,9 +48,24 @@ function App() {
   }
 
   useEffect(() => {
-      fetchData();
-      console.log("fetching data");
-    }, [])
+    fetchData();
+    console.log("fetching data");
+    auth.onAuthStateChanged((cred) => {
+      if (cred) {
+        cred.getIdToken().then((token) => {
+          console.log(token);
+          validateUserJWTTOken(token).then((data) => {
+            console.log(data);
+            dispatch({
+              type: actionType.SET_USER,
+              user: data,
+            });
+          });
+        });
+      }
+    });
+  }, []); // Close the useEffect properly
+  
 
 
 

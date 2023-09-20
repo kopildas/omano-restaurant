@@ -1,6 +1,7 @@
 import React from 'react'
 
-export default function Description() {
+export default function Description({food_id}) {
+  console.log(food_id);
   return (
     <div className="flex flex-col gap-5 text-gray-700">
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, ipsam? Quisquam nam totam non! Doloribus officiis laborum necessitatibus repellendus labore quasi accusantium distinctio! Iusto deleniti tempora eligendi, illum unde omnis!</p>

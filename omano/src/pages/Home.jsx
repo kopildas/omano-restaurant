@@ -7,6 +7,8 @@ import RowContainer from '../components/home/RowContainer'
 import { useStateValue } from '../context/StateProvider'
 import Menu from '../components/home/Menu'
 import CartContainer from '../components/home/CartContainer'
+import Reservation from '../components/home/Reservation'
+import Footer from '../components/home/Footer'
 
 export default function Home() {
 
@@ -19,12 +21,12 @@ export default function Home() {
     
   }, [scrollValue,cartShow])
   
-  const lunchItems = foodItem?.filter((n) => n.category === "Lunch");
+  // const lunchItems = foodItem?.filter((n) => n.category === "Lunch");
 console.log(foodItem);
   return (
     <div>
       <Hero/>
-      <Food_cover_1/> 
+      
       <section className="w-full my-6">
         <div className="flex items-center justify-center w-full">
           <p className="relative text-2xl font-semibold capitalize text-headingColor before:absolute before:rounded-lg before:contents before:w-32">Our fresh & healthy foods</p>
@@ -39,14 +41,23 @@ console.log(foodItem);
             <MdChevronRight className="text-lg text-white"/>
           </motion.div>
         </div>
-        <RowContainer scrollValue={scrollValue} flag={true} data={foodItem?.filter((n) => n.category === "Lunch")}/>
+        <RowContainer scrollValue={scrollValue} flag={true} data={foodItem?.filter((n) => n.category === "Chicken")}/>
       </section >
       <section className="w-full " id="menu">
       <div className="flex flex-col items-center justify-center w-full">
         <p className="relative text-3xl font-semibold capitalize before:absolute">Our hot dishe
         </p>
       
+        <div className="bg-[url('../public/images/menu_cover1.jpg')] bg-cover w-screen bg-fixed">
       <Menu scrollValue={scrollValue} flag={true} data={foodItem}/>
+      </div>
+      <Food_cover_1/> 
+      <div className="mt-44 mb-44">
+      <Reservation/>
+      </div>
+
+     
+      <Footer/>
       
       {/* cart */}
       {cartShow && (<CartContainer/>)}

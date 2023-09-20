@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { BsGrid, BsList } from "react-icons/bs";
 import { category } from "../components/admin_comp/Add_popup";
+import CartContainer from "../components/home/CartContainer";
 import RowContainer from "../components/home/RowContainer";
 import { useStateValue } from "../context/StateProvider";
 
@@ -10,13 +11,18 @@ export default function Foods() {
   const [filter, setFilter] = useState("Fast Food");
   const [view, setView] = useState("true");
   const [sortt, setsortt] = useState("false");
-  const [{ foodItem }, dispatch] = useStateValue();
+  const [{ foodItem, cartShow }, dispatch] = useStateValue();
   const [foods, setFoods] = useState(foodItem);
   let [sortedFoods, setSortedFoods] = useState(foodItem); // Use a separate state variable for the sorted array
   const [text, setText] = useState("");
   const [priceArry, setPriceArry] = useState(0);
   const [price, setPrice] = useState(0);
   const [maxPrFilter, setMaxPrFilter] = useState(0);
+  const [length, setLength] = useState(0);
+
+  const handleDataLengthChange = (length) => {
+    setLength(length);
+  };
 
   const priceFilter = (e) => {
     console.log(e.target.value);
@@ -63,6 +69,7 @@ export default function Foods() {
     console.log("kk");
     console.log(foo);
     setFoods(foo);
+    // setLength(foo.length);
   };
 
   //
@@ -126,7 +133,8 @@ export default function Foods() {
 
   return (
     <>
-      <div className="cover_1">
+      {cartShow && <CartContainer />}
+      <div className="hidden md:flex md:cover_1">
         <div className="grid h-full grid-flow-row">
           <div className="flex flex-col items-start justify-center px-44">
             <p>Foods</p>
@@ -138,14 +146,15 @@ export default function Foods() {
       </div>
 
       <div className=" h-96">
-        <div className="h-5 mt-12 mb-16 ml-32 mr-32 ">
-          <div className="flex ">
-            <div className="w-52">
+        <div className="h-5 mt-12 mb-16 ml-5 md:ml-32 bg-slate-600 ">
+          <div className="flex flex-col md:flex-row">
+            <div className="">
               {/* search bar need control event loop */}
               <form onSubmit={(e) => e.preventDefault()}>
                 <input
                   type="text"
                   name="text"
+                  placeholder="Search"
                   value={text}
                   onChange={updateSearchValue}
                 />
@@ -158,53 +167,70 @@ export default function Foods() {
                   </button> */}
               </form>
             </div>
-            <div className="items-start justify-start flex-1 w-64 bg-red-600">
-              hkashas
-            </div>
-            <div className="flex-1 w-32 ">
-              <div className="flex gap-3 items-end justify-end">
-                {/* <p>sort</p> */}
-                <form className="" action="#">
-                  <label htmlFor="sort"></label>
-                  <select
-                    name="sort"
-                    id="sort"
-                    className="p-2 mt-3 rounded-xl w-40 font-medium text-gray-500 cursor-pointer"
-                    onClick={sorting}
-                  >
-                    <option className="p-1 cursor-pointer h-2" value="lowest">
-                      Price(lowest)
-                    </option>
+            <div className="flex items-center flex-col md:flex-row md:gap-72 justify-between">
+              <div className="  w-72">
+                <p className="md:ml-20 ml-3 mt-2 text-lg font-semibold items-center justify-center">
+                  Showing {length} of {length} results
+                </p>
+              </div>
+              <div className="md:ml-5">
+                <div className="ml-3 flex justify-between items-center gap-5 md:gap-2 md:justify-end">
+                  {/* Left Div */}
+                  <div>
+                    <form className="" action="#">
+                      <label htmlFor="sort"></label>
+                      <select
+                        name="sort"
+                        id="sort"
+                        className="p-2 mt-3 rounded-xl w-52 font-medium text-gray-500 cursor-pointer"
+                        onClick={sorting}
+                      >
+                        <option
+                          className="p-1 cursor-pointer h-2"
+                          value="lowest"
+                        >
+                          Price(lowest)
+                        </option>
+                        <option
+                          className="p-1 cursor-pointer h-2"
+                          value="highest"
+                        >
+                          Price(highest)
+                        </option>
+                        <option className="p-1 cursor-pointer h-2" value="a-z">
+                          Price(a-z)
+                        </option>
+                        <option className="p-1 cursor-pointer h-2" value="z-a">
+                          Price(z-a)
+                        </option>
+                      </select>
+                    </form>
+                  </div>
 
-                    <option className="p-1 cursor-pointer h-2" value="highest">
-                      Price(highest)
-                    </option>
-
-                    <option className="p-1 cursor-pointer h-2" value="a-z">
-                      Price(a-z)
-                    </option>
-
-                    <option className="p-1 cursor-pointer h-2" value="z-a">
-                      Price(z-a)
-                    </option>
-                  </select>
-                </form>
-
-                <BsGrid
-                  className={`${view ? "text-red-600" : null} text-2xl mt-3`}
-                  onClick={() => setView(true)}
-                />
-                <BsList
-                  className={`${view ? null : "text-red-600"} text-2xl mt-3`}
-                  onClick={() => setView(false)}
-                />
+                  {/* Right Div */}
+                  <div className="flex ">
+                    <BsGrid
+                      className={`${
+                        view ? "text-red-600" : null
+                      } text-2xl mt-3`}
+                      onClick={() => setView(true)}
+                    />
+                    <BsList
+                      className={`${
+                        view ? null : "text-red-600"
+                      } text-2xl mt-3`}
+                      onClick={() => setView(false)}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="flex mt-6">
-            <div className="w-52 h-auto ">
-              <div className="bg-gray-100 rounded-md">
+          <div className="flex flex-row mt-6">
+            <div className=" md:h-auto ">
+              {/* catagory in big screen */}
+              <div className="bg-gray-100 rounded-md hidden md:flex">
                 <div className="pl-2 pr-2 pt-2 pb-5">
                   <p className="text-lg font-bold">All Menu</p>
 
@@ -219,7 +245,7 @@ export default function Foods() {
                             filter === category.value
                               ? "bg-red-500"
                               : "bg-slate-300"
-                          } w-48 h-6 cursor-pointer rounded-lg drop-shadow-xl flex flex-col gap-3 items-center justify-center duration-150 transition-all ease-in-out mt-6`}
+                          } w-48 h-6 cursor-pointer rounded-lg drop-shadow-xl flex flex-row md:flex-col gap-3 items-center justify-center duration-150 transition-all ease-in-out mt-6`}
                         >
                           <p className="">
                             {bar} {category.value}
@@ -230,8 +256,34 @@ export default function Foods() {
                 </div>
               </div>
 
-              <div className="mt-8 p-5 rounded-md bg-slate-100">
-                <p className="text-lg font-bold">price filter</p>
+              <div
+                // ref={rowContainer}
+                className={`w-96 flex items-center gap-7 scroll-smooth md:hidden overflow-x-scroll scrollbar-none`}
+              >
+                {category &&
+                  category.map((category) => (
+                    <div
+                      key={category?.id}
+                      className={`w-full  flex justify-start lg:justify-center gap-3  scrollbar-none`}
+                      onClick={() => setFilter(category.value)}
+                    >
+                      <div
+                        className={`group ${
+                          filter === category.value
+                            ? "bg-red-500"
+                            : "bg-slate-300"
+                        } w-20 min-w[84px] h-25 cursor-pointer rounded-lg drop-shadow-xl flex flex-col gap-3 items-center justify-center duration-150 transition-all ease-in-out`}
+                      >
+                        <div className="w-12 h-12 mt-4 text-sm text">
+                          <img src={category.label} className="" alt="" />
+                        </div>
+                        <p className="text-sm p-2">{category.value}</p>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+              <div className="mt-8 p-5 rounded-md bg-slate-100 hidden">
+                <p className="text-lg font-bold">Price filter</p>
                 <p className="text-sm font-semibold">${price}</p>
 
                 <input
@@ -246,28 +298,49 @@ export default function Foods() {
                 />
               </div>
 
-              <div className="mt-6">
+              <div className="mt-6 hidden md:flex">
                 <p>popular tags</p>
               </div>
             </div>
-            <div className="flex-auto  ">
+            <div className=" mt-36 hidden md:flex">
               <div className="flex w-full ">
                 {view ? (
                   <RowContainer
                     gridORlist={true}
                     flag={false}
+                    onDataLengthChange={handleDataLengthChange}
                     data={foods?.filter((n) => n.category === filter)}
                   />
                 ) : (
                   <RowContainer
                     gridORlist={false}
                     flag={false}
+                    onDataLengthChange={handleDataLengthChange}
                     data={foods?.filter((n) => n.category === filter)}
                   />
                 )}
               </div>
             </div>
           </div>
+          <div className="flex md:hidden">
+              <div className="flex w-full ">
+                {view ? (
+                  <RowContainer
+                    gridORlist={true}
+                    flag={false}
+                    onDataLengthChange={handleDataLengthChange}
+                    data={foods?.filter((n) => n.category === filter)}
+                  />
+                ) : (
+                  <RowContainer
+                    gridORlist={false}
+                    flag={false}
+                    onDataLengthChange={handleDataLengthChange}
+                    data={foods?.filter((n) => n.category === filter)}
+                  />
+                )}
+              </div>
+            </div>
         </div>
       </div>
     </>

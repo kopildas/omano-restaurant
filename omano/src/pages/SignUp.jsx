@@ -12,6 +12,9 @@ import { db } from "../firebase";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { validateUserJWTTOken } from "../api";
+import { useStateValue } from "../context/StateProvider";
+import { actionType } from "../context/reducer";
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
@@ -19,12 +22,17 @@ export default function SignUp() {
     username: "",
     email: "",
     password: "",
+    confpassword: "",
     phone: "",
   });
 
-  const navigate = useNavigate();
 
-  const { username, email, password, phone } = formData;
+  
+
+  const navigate = useNavigate();
+  const [{}, dispatch] = useStateValue();
+
+  const { username, email, password, phone, confpassword } = formData;
 
   const handleInputChange = (e) => {
     setFormData((prevState) => ({
@@ -35,33 +43,59 @@ export default function SignUp() {
 
   async function handleSignup(e) {
     e.preventDefault();
-  
+
     // for authentication using firebase auth
     try {
       const auth = getAuth();
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-  
-      await updateProfile(auth.currentUser, {
-        displayName: username,
-        phoneNumber: phone,
-      });
-      console.log(auth.currentUser.phoneNumber);
-      const user = userCredential.user;
-      const formDataCopy = { ...formData };
-      delete formDataCopy.password;
-      formDataCopy.timestamp = serverTimestamp();
-  
-      //save into firebase storeage
-      await setDoc(doc(db, "users", user.uid), formDataCopy);
-  
-      // redirect to home page
-      navigate("/");
+      let user;
+      let formDataCopy;
+      if (password === confpassword) {
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        ).then((userCred) => {
+          user = userCred.user;
+          console.log(user);
+          formDataCopy = { ...formData };
+          delete formDataCopy.password;
+          delete formDataCopy.confpassword;
+          formDataCopy.timestamp = serverTimestamp();
+          console.log(formDataCopy);
+          auth.onAuthStateChanged((cred) => {
+            if (cred) {
+              cred.getIdToken().then((token) => {
+                console.log(token);
+                validateUserJWTTOken(token).then(async (data) => {
+                  console.log(data);
+                  await setDoc(doc(db, "users", user.uid), formDataCopy);
+                  dispatch({
+                    type: actionType.SET_USER,
+                    user: data,
+                  });
+                });
+              });
+            }
+          });
+        });
+
+        await updateProfile(auth.currentUser, {
+          displayName: username,
+          phoneNumber: phone,
+        });
+        console.log(auth.currentUser);
+
+        //save into firebase storeage
+
+        // redirect to home page
+        toast.success("Registration done successfully..!");
+        navigate("/");
+      } else {
+        toast.error("Password not matched..!");
+      }
     } catch (error) {
       toast.error("Something went wrong with the registration!");
+      console.log(error);
     }
   }
   const [seen, setSeen] = useState(false);
@@ -130,6 +164,31 @@ export default function SignUp() {
               )}
             </label>
           </div>
+
+          <div className="relative mb-4">
+            <label className="mb-2">
+              Confirm Password:
+              <input
+                className="input-field pr-10 w-full"
+                type={showPassword ? "text" : "password"}
+                id="confpassword"
+                value={confpassword}
+                onChange={handleInputChange}
+              />
+              {showPassword ? (
+                <AiFillEyeInvisible
+                  className="absolute top-11 transform -translate-y-1/2 right-3 text-xl cursor-pointer"
+                  onClick={() => setShowPassword((prevState) => !prevState)}
+                />
+              ) : (
+                <AiFillEye
+                  className="absolute transform -translate-y-1/2 right-3 top-11 text-xl cursor-pointer"
+                  onClick={() => setShowPassword((prevState) => !prevState)}
+                />
+              )}
+            </label>
+          </div>
+
           <div className="flex justify-between mb-4">
             <p>
               Already have an account?

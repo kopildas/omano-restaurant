@@ -12,17 +12,22 @@ export default function PrivateRoute() {
   if (checkingStatus) {
     return <Spinner />;
   }
+
+
+  console.log(loggedIn);
   console.log(idd);
   console.log(initialState.user);
   const em= initialState.user.email;
   console.log(em);
   // return loggedIn ? <Outlet /> : <Navigate to = "/sign-up" />;
+
+  
   if (loggedIn) {
-    if (em === "kopildas451@gmail.com") {
-      console.log(em);
+    if (idd === "kopildas451@gmail.com") {
+      console.log(idd);
       return <Admin />;
     } else {
-      console.log(em);
+      console.log(idd);
       return <Profile />;
     }
   } else {

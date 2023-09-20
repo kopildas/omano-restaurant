@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import Signup from "./Signup";
@@ -6,16 +6,31 @@ import OAuth from "./OAuth";
 import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
 import { toast } from "react-toastify";
 import { Navigate } from "react-router-dom";
+import { validateUserJWTTOken } from "../api";
+import { useStateValue } from "../context/StateProvider";
+import { actionType } from "../context/reducer";
 
 export default function Login({ toggle }) {
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    
   });
+  const [{user}, dispatch] = useStateValue();
+  console.log(user);
 
-  const { email, password } = formData;
+
+useEffect(() => {
+
+  console.log(user);
+
+}, [user])
+
+
+
+  const { email, password,  } = formData;
   // this function did not work it cant save state data and show it in dev
   function onChange(e) {
     setFormData((prevState) => ({
@@ -29,22 +44,46 @@ export default function Login({ toggle }) {
     e.preventDefault();
     // Code to handle login goes here
     try {
-      const auth = getAuth()
-      const userCredential = await signInWithEmailAndPassword(auth,email,password)
-      if(userCredential.user)
-      {
-        console.log(userCredential.user);
-        console.log("hola");
-        navigate("/")
-      }
+      
+        const auth = getAuth();
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        ).then((userCred)=> {
+          auth.onAuthStateChanged((cred)=> {
+            if(cred){
+              cred.getIdToken().then(token => {
+                console.log(token);
+                validateUserJWTTOken(token).then(data => {
+                  console.log(data);
+                  dispatch({
+                    type: actionType.SET_USER,
+                    user: data,
+                  });
+                  navigate("/");
+                })
+              })
+            }
+          })
+        });
+        // if (userCredential.user) {
+        //   console.log(userCredential.user);
+        //   console.log("hola");
+        //   navigate("/");
+        // }
+        toast.success("Login Successfully");
+        // toggle();
+      
     } catch (error) {
-      toast.error("Bad user credential")
+      toast.error("Bad user credential");
+      console.log(error);
+      toggle();
     }
-    toggle();
   }
 
   return (
-    <div className="popup">
+    <div className="popup backdrop-blur-sm">
       <div className="popup-inner">
         <h2 className="text-2xl text-center mb-6">Login</h2>
         <form onSubmit={handleLogin}>
@@ -56,6 +95,7 @@ export default function Login({ toggle }) {
               id="email"
               value={email}
               onChange={onChange}
+              required
             />
           </div>
           <div className="relative mb-4">
@@ -66,6 +106,7 @@ export default function Login({ toggle }) {
               value={password}
               onChange={onChange}
               className="input-field pr-10 w-full"
+              required
             />
             {showPassword ? (
               <AiFillEyeInvisible
@@ -79,6 +120,7 @@ export default function Login({ toggle }) {
               />
             )}
           </div>
+          
           <div className="flex justify-between mb-4">
             <p>
               Don't have an account?{" "}

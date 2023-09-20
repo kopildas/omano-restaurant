@@ -1,12 +1,13 @@
+import { getAuth } from "firebase/auth";
 import React, { useState } from "react";
+import { BiLogOut } from "react-icons/bi";
 import {
-  FaTh,
   FaBars,
-  FaUserAlt,
-  FaRegChartBar,
   FaCommentAlt,
-  FaShoppingBag,
+  FaRegChartBar,
+  FaTh,
   FaThList,
+  FaUserAlt,
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
@@ -39,15 +40,27 @@ export default function Sidebar({ children }) {
       name: "Food Items",
       icon: <FaThList />,
     },
+    {
+      path: "/",
+      name: "Logout",
+      icon: <BiLogOut />,
+    },
   ];
+
+  const auth = getAuth();
+  function onLogOut() {
+    // auth.signOut();
+    console.log("sign out");
+  }
+
   return (
-    <div className="flex h-screen">
+    <div className="flex sticky z-40">
       <div
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
         className={`${
           isOpen ? "w-40" : "w-12"
-        } bg-black text-white transition-all duration-500 flex-shrink-0`}
+        } bg-black scroll-none text-white transition-all duration-500 flex-shrink-0`}
       >
         <div className="top_section">
           {/* <h1
@@ -60,27 +73,30 @@ export default function Sidebar({ children }) {
             <FaBars onClick={toggle} className="text-3xl flex right-2" />
           </div>
         </div>
-        {menuItem.map((item, index) => (
-          <NavLink
-            to={item.path}
-            key={index}
-            className="flex items-center p-4 gap-4 text-white transition-all duration-500 hover:bg-lightBlue-500 hover:text-black"
-            activeClassName="active"
-            end={true}
-          >
-            <div className="text-xl">{item.icon}</div>
-            <div
-              style={{ display: isOpen ? "block" : "none" }}
-              className="link_text"
+        <div
+          className="menu-items-container"
+          style={{ position: "sticky", top: 0 }}
+        >
+          {menuItem.map((item, index) => (
+            <NavLink
+              to={item.path}
+              key={index}
+              className="flex sticky items-center p-4 gap-4 text-white transition-all duration-500 hover:bg-lightBlue-500 hover:text-white"
+              activeClassName="active"
+              end={true}
             >
-              {item.name}
-            </div>
-          </NavLink>
-        ))}
+              <div className="text-xl">{item.icon}</div>
+              <div
+                style={{ display: isOpen ? "block" : "none" }}
+                className="link_text"
+                onClick={item.name === "Logout" ? onLogOut() : null}
+              >
+                {item.name}
+              </div>
+            </NavLink>
+          ))}
+        </div>
       </div>
-      
     </div>
   );
 }
-
-

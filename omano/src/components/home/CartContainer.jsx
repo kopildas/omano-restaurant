@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { RiRefreshFill } from "react-icons/ri";
 import { BiMinus, BiPlus } from "react-icons/bi";
@@ -8,6 +8,13 @@ import CartitemComponenet from "./CartitemComponenet";
 
 export default function CartContainer() {
   const [{ cartShow,cartItems,user }, dispatch] = useStateValue();
+  const [total, setTotal] = useState(0);
+
+
+
+  const setiingTotal = (data) => {
+    setTotal(data)
+  }
 
   function cartShowing() {
     dispatch({
@@ -23,8 +30,9 @@ export default function CartContainer() {
       className="fixed top-0 right-0 w-full md:w-80 h-screen bg-gray-200 drop-shadow-md flex flex-col z-[101]"
       
     >
-      <div className="w-full flex items-center justify-between p-4 cursor-pointer" onClick={cartShowing}>
-        <motion.div whileTap={{ scale: 0.75 }}>
+      <div className="w-full flex items-center justify-center p-4 cursor-pointer" onClick={cartShowing}>
+        <motion.div whileTap={{ scale: 0.75 }} className="flex-1 items-start justify-start">
+          
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-8 w-8"
@@ -41,51 +49,53 @@ export default function CartContainer() {
           </svg>
         </motion.div>
 
-        <p className="text-gray-600 text-lg font-semibold">Cart</p>
+        <p className="text-gray-600 text-lg font-semibold flex-1 items-start justify-start">Cart</p>
 
-        <motion.p
+        {/* <motion.p
           whileTap={{ scale: 0.75 }}
           className="flex items-center gap-2 p-1 px-2 my-2 bg-gray-100 rounded-md hover:shadow-md cursor-pointer text-base text-gray-600"
         >
           Clear <RiRefreshFill />
-        </motion.p>
+        </motion.p> */}
       </div>
 
 
       {cartItems && cartItems.length>0 ? (
         
-      <div className="w-full h-full bg-gray-900 rounded-t-[2rem] flex flex-col">
+      <div className="w-full h-full bg-gray-700 rounded-t-[2rem] flex flex-col">
         {/* cart section */}
-        <div className="w-full h-80 md:h-42 px-6 py-10 flex flex-col gap-3 overflow-y-scroll scrollbar-none">
+        <div className="w-full h-96 md:h-42 px-6 py-10 flex flex-col gap-3 overflow-y-scroll scrollbar-none">
           {/* cart items */}
           {cartItems && cartItems.map((item) => (
-            <CartitemComponenet key={item.id} item={item}/>
+            <CartitemComponenet key={item.id} item={item} setiingTotal={setiingTotal}/>
           ))}
         </div>
 
         {/* cart total section */}
-        <div className="w-full flex-1 bg-gray-600 rounded-t-[2rem] flex flex-col items-center justify-evenly px-8 py-2">
-          <div className="w-full flex items-center justify-between">
-            <p className="text-gray-400 text-lg">Sub Total</p>
-            <p className="text-gray-400 text-lg">$ 77</p>
+        <div className="w-full flex-1 bg-gray-500 rounded-t-[2rem] flex flex-col items-center justify-evenly px-8 py-2">
+         <div className="bg-gray-300 p-2 rounded-lg w-full">
+         <div className="w-full flex items-center justify-between">
+            <p className="text-md">Sub Total</p>
+            <p className="text-lg">$ {total}</p>
           </div>
           <div className="w-full flex items-center justify-between">
-            <p className="text-gray-400 text-lg">Delivery</p>
-            <p className="text-gray-400 text-lg">$ 77</p>
+            <p className="text-md">Delivery</p>
+            <p className="text-lg">$ 77</p>
           </div>
 
-          <div className="w-full border-b border-gray-600 my-2"></div>
+          <div className="w-full border-b border-gray-600"></div>
 
           <div className="w-full flex items-center justify-between">
-            <p className="text-gray-400 text-lg">Total</p>
-            <p className="text-gray-400 text-lg">$ 877</p>
+            <p className="text-lg">Total</p>
+            <p className="text-lg">$ {total + 77}</p>
           </div>
 
+         </div>
           {user ? (
             <motion.button
             whileTap={{ scale: 0.8 }}
             type="button"
-            className="w-full rounded-full bg-gradient-to-t from-orange-400 to-orange-600 text-gray-50 my-2 hover:shadow-lg "
+            className="w-full rounded-full bg-gradient-to-t from-orange-400 to-orange-600 text-gray-50 h-10 hover:shadow-lg "
           >
             Check Out
           </motion.button>

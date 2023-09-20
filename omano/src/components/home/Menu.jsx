@@ -7,7 +7,7 @@ import RowContainer from "./RowContainer";
 export default function Menu({ flag, data, scrollValue }) {
   console.log(data);
   const rowContainer = useRef();
-  const [filter, setFilter] = useState("Lunch");
+  const [filter, setFilter] = useState("Fast Food");
   useEffect(() => {
     rowContainer.current.scrollLeft += scrollValue;
   }, [scrollValue]);
