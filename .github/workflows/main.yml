@@ -21,6 +21,14 @@ jobs:
         with:
           name: build
           path: build
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+            node-version: 18.x
+      - name: Debug npm scripts
+        run: npm run
+          
+        
   deploy:
     name: Deploy
     needs: build
@@ -39,3 +47,5 @@ jobs:
           args: deploy --only hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+
