@@ -27,6 +27,11 @@ jobs:
             node-version: 18.x
       - name: Debug npm scripts
         run: npm run
+      - name: Display package.json
+        run: cat package.json
+      - name: List Directory Contents
+        run: ls -l
+      
           
         
   deploy:
