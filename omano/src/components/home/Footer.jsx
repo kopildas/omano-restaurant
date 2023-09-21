@@ -45,12 +45,12 @@ export default function Footer() {
                 ></span>
               </p>
               <div className="text-gray-400">
-                <p>> Biriyani</p>
-                <p>> Pasta</p>
-                <p>> Chicken Fry</p>
-                <p>> Fast Food</p>
-                <p>> Ice-Cream</p>
-                <p>> Drinks And Juice</p>
+                <p> Biriyani</p>
+                <p> Pasta</p>
+                <p> Chicken Fry</p>
+                <p> Fast Food</p>
+                <p> Ice-Cream</p>
+                <p> Drinks And Juice</p>
               </div>
             </div>
             <div className="text-white md:w-1/5">
