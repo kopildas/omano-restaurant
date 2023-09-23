@@ -20,7 +20,7 @@ export const category = [
   { value: "Biriyani", label: "../public/images/lunch.png" },
   { value: "Pasta", label: "../public/images/dinner.png" },
   { value: "Chicken", label: "../public/images/chicken.png" },
-  { value: "Drink & Juice", label: "../public/images/juice.png" },
+  { value: "Drinks", label: "../public/images/juice.png" },
   { value: "Ice-Cream", label: "../public/images/ice.png" },
 ];
 

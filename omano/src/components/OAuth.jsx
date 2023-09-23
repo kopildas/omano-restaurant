@@ -67,6 +67,7 @@ export default function OAuth() {
                 type: actionType.SET_USER,
                 user: data,
               });
+              localStorage.setItem("user", JSON.stringify(data));
             })
           })
         }

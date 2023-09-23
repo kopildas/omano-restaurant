@@ -1,23 +1,9 @@
 import { getAuth, updateProfile } from "firebase/auth";
+import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  orderBy,
-  query,
-  updateDoc,
-  where,
-} from "firebase/firestore";
 import { toast } from "react-toastify";
 import { db } from "../firebase";
-
-
-
-
-
 
 export default function Profile() {
   const auth = getAuth();
@@ -33,6 +19,7 @@ export default function Profile() {
   const { name, email, phone } = formData;
 
   function onLogOut() {
+    localStorage.removeItem("user");
     auth.signOut();
     navigate("/");
   }
@@ -56,10 +43,10 @@ export default function Profile() {
       });
 
       //update firestore
-      const docRef = doc(db,"users", auth.currentUser.uid);
-      await updateDoc(docRef,{
+      const docRef = doc(db, "users", auth.currentUser.uid);
+      await updateDoc(docRef, {
         name,
-      })
+      });
       toast.success("Profile updated successfully!");
     } catch (error) {
       toast.error("Error updating profile:", error);

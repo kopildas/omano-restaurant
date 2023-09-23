@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Sidebar from "../../components/admin_comp/Sidebar";
 import { MdOutlineAttachMoney, MdOutlineFoodBank } from "react-icons/md";
 import OrderSummary from "../../components/admin_comp/OrderSummary";
 import Revenu from "../../components/admin_comp/Revenu";
+
+// import { category } from "../../admin_comp/Add_popup";
 export default function Admin() {
+
+
+  
+
   return (
     <div className="flex">
       <Sidebar />
@@ -12,7 +18,7 @@ export default function Admin() {
         <div className="bg-gray-100 p-2">
           {/* Add more content here */}
           <div className="grid grid-cols-1 md:grid-cols-4 md:gap-6 ">
-            <div className="flex gap-10 bg-blue-400 flex-1 px-6 py-6 m-4 rounded-md">
+            <div className="flex gap-10 bg-green-300 flex-1 px-6 py-6 m-4 rounded-md">
               <div className="text-5xl py-4 bg-slate-200 max-w-full rounded-full">
                 <MdOutlineFoodBank />
               </div>
@@ -26,7 +32,7 @@ export default function Admin() {
               </div>
             </div>
 
-            <div className="flex gap-10 bg-blue-400 flex-1 px-6 py-6 m-4 rounded-md">
+            <div className="flex gap-10 bg-green-300 flex-1 px-6 py-6 m-4 rounded-md">
               <div className="text-6xl py-4 bg-slate-200 rounded-full">
                 <MdOutlineAttachMoney />
               </div>
@@ -40,7 +46,7 @@ export default function Admin() {
               </div>
             </div>
 
-            <div className="flex gap-10 bg-blue-400 flex-1 px-6 py-6 m-4 rounded-md">
+            <div className="flex gap-10 bg-green-300 flex-1 px-6 py-6 m-4 rounded-md">
               <div className="text-6xl py-4">
                 <MdOutlineFoodBank />
               </div>
@@ -54,7 +60,7 @@ export default function Admin() {
               </div>
             </div>
 
-            <div className="flex gap-10 bg-blue-400 flex-1 px-6 py-6 m-4 rounded-md">
+            <div className="flex gap-10 bg-green-300 flex-1 px-6 py-6 m-4 rounded-md">
               <div className="text-6xl py-4">
                 <MdOutlineFoodBank />
               </div>

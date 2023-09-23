@@ -179,7 +179,7 @@ console.log(filter);
           <div className="md:flex-1 w-full md:w-1/5 flex-row md:flex-col bg-gray-500 rounded-lg h-20 mt-10 md:mt-0">
             <p className="flex items-center justify-center ">Todays available</p>
             <p className="flex items-center justify-center "> Time slot</p>
-            <div className="p-5 flex md:flex-1 flex-row md:flex-col gap-2 w-full bg-slate-900 max-h-20 md:max-h-96 overflow-x-auto md:overflow-y-auto scrollbar-none">
+            <div className="p-5 flex md:flex-1 flex-row md:flex-col gap-2 w-full bg-slate-900 max-h-20 md:max-h-80 overflow-x-auto md:overflow-y-auto scrollbar-none">
               {timeRange &&
                 timeRange.map((time) => (
                   <div

@@ -61,6 +61,7 @@ useEffect(() => {
                     type: actionType.SET_USER,
                     user: data,
                   });
+                  localStorage.setItem("user", JSON.stringify(data));
                   navigate("/");
                 })
               })

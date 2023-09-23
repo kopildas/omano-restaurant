@@ -48,8 +48,10 @@ export default function Sidebar({ children }) {
   ];
 
   const auth = getAuth();
-  function onLogOut() {
-    // auth.signOut();
+  function onLogOut(e) {
+    localStorage.removeItem("user");
+    auth.signOut();
+    console.log(e);
     console.log("sign out");
   }
 
@@ -89,7 +91,7 @@ export default function Sidebar({ children }) {
               <div
                 style={{ display: isOpen ? "block" : "none" }}
                 className="link_text"
-                onClick={item.name === "Logout" ? onLogOut() : null}
+                onClick={()=> item.name === "Logout" && onLogOut(item.name)}
               >
                 {item.name}
               </div>
