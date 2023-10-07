@@ -49,13 +49,11 @@ function App() {
 
   useEffect(() => {
     fetchData();
-    console.log("fetching data");
     auth.onAuthStateChanged((cred) => {
       if (cred) {
         cred.getIdToken().then((token) => {
-          console.log(token);
           validateUserJWTTOken(token).then((data) => {
-            console.log(data);
+            // console.log(data);
             dispatch({
               type: actionType.SET_USER,
               user: data,

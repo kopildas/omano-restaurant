@@ -19,19 +19,15 @@ export default function RowContainer({
   const [{ cartItems }, dispatch] = useStateValue();
   const navigate = useNavigate();
 
-  console.log(data);
 
   const cartDispatch = () => {
-    console.log(updatedItem);
     // localStorage.setItem("cartItems", JSON.string(updatedItem));
     localStorage.removeItem("cartItems");
     localStorage.setItem("cartItems", JSON.stringify(updatedItem));
-    console.log("dfasd");
     dispatch({
       type: actionType.SET_CART_ITEMS,
       cartItems: updatedItem,
     });
-    console.log(updatedItem);
   };
 
   /**
@@ -55,13 +51,10 @@ export default function RowContainer({
         if (f.id === item.id) {
           const num = parseFloat(f.quantity);
           f.quantity = num + 1;
-          console.log(f.quantity);
           cartDispatch();
           flg = false;
           return;
         } else {
-          console.log(f.id);
-          console.log(item.id);
         }
       });
 
@@ -70,7 +63,6 @@ export default function RowContainer({
           type: actionType.SET_CART_ITEMS,
           cartItems: [...cartItems, item],
         });
-        console.log("etaw holo");
         localStorage.setItem("cartItems", JSON.stringify([...cartItems, item]));
       }
     } else if (item.cartORadd === "add") {
@@ -79,20 +71,18 @@ export default function RowContainer({
         if (f.id === item.id) {
           const num = parseFloat(f.quantity);
           f.quantity = num + 1;
-          console.log(f.quantity);
+         
         } else {
-          console.log(f.id);
-          console.log(item.id);
+          
         }
       });
       cartDispatch();
     }
     // localStorage.setItem("cartItems", JSON.stringify(cartItems));
   };
-
   useEffect(() => {
     setUpdatedItem(cartItems);
-    console.log(cartItems);
+   
     if (onDataLengthChange) {
       onDataLengthChange(data.length); // Call the callback to update length in parent
     }
@@ -143,7 +133,7 @@ export default function RowContainer({
                   alt=""
                   className={`w-40 h-40 ${
                     flag ? "rounded-lg" : "rounded-full"
-                  }  -mt-8 drop-shadow-2xl`}
+                  }  -mt-7 drop-shadow-2xl`}
                 />
               </div>
               <div>
@@ -165,7 +155,7 @@ export default function RowContainer({
                 </p>
                 <motion.div
                   whileTap={{ scale: 1.2 }}
-                  className="flex items-center justify-center w-12 h-12 text-2xl bg-red-600 rounded-full cursor-pointer hover:shadow-md"
+                  className="flex items-center justify-center w-12 h-12 text-2xl bg-orange-500 rounded-full cursor-pointer hover:shadow-md"
                   onClick={(e) => {
                     stopEventPropagationTry(e); // Prevent event from propagating
                     addtoCart(item);

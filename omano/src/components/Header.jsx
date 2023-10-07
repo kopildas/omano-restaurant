@@ -36,6 +36,20 @@ export default function Header({ children }) {
     }
   }
 
+
+  function activeHeader(route) {
+    
+    
+    if (route === location.pathname) {
+      // setIsCurrentRouteAdmin(false)
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+
   function adminOrNot() {
 
     if (
@@ -61,7 +75,7 @@ export default function Header({ children }) {
   const [pagestate, setPageState] = useState("Log in");
 
   useEffect(() => {
-
+      
       if (user && user.email === "kopildas451@gmail.com") {
         setPageState("Admin");
         setSeen(!seen);
@@ -84,8 +98,13 @@ export default function Header({ children }) {
     togglePopup("signup");
   }
   function calllog() {
-    togglePop();
+    console.log("callLog");
     togglePopup("login");
+    console.log(popups);
+    console.log(seen);
+    console.log(pagestate);
+    togglePop();
+   
   }
 
   function cartShowing() {
@@ -157,8 +176,8 @@ export default function Header({ children }) {
           <div className="flex items-center">
             <ul className="flex space-x-10">
               <li
-                className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
-                  pathMatchRoute("/") && "text-black border-b-red-900"
+                className={`cursor-pointer py-3 hover:text-red-400 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
+                  activeHeader("/") ? "text-red-500 border-t-4 border-t-red-500" : ""
                 }`}
                 onClick={() => {
                   navigate("/");
@@ -168,23 +187,28 @@ export default function Header({ children }) {
                 Home
               </li>
               <li
-                className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
-                  pathMatchRoute("/offer") && "text-black border-b-red-900"
+                className={`cursor-pointer py-3 hover:text-red-400 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
+                  activeHeader("/foods") ? "text-red-500 border-t-4 border-t-red-500" : ""
                 }`}
                 onClick={() => {
-                  navigate("/");
+                  navigate("/foods");
                   adminOrNot();
                 }}
               >
-                offer
+                Products
               </li>
               <li
-                className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
-                  pathMatchRoute("/sign-in") && "text-black border-b-red-900"
+                className={`cursor-pointer py-3 hover:text-red-400 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
+                  activeHeader("/about") ? "text-red-500 border-t-4 border-t-red-500" : ""
                 }`}
+                onClick={() => {
+                  navigate("/about");
+                  adminOrNot();
+                }}
               >
-                <Link to="/sign-in">Sign in</Link>
+                About us
               </li>
+             
 
               <div
                 className="relative flex items-center justify-center gap-9"
@@ -200,10 +224,19 @@ export default function Header({ children }) {
                 )}
               </div>
 
+              {!user ? (
+                <li
+                className={`cursor-pointer py-3 hover:text-red-400 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
+                  activeHeader("/sign-up") ? "text-red-500 border-t-4 border-t-red-500" : ""
+                }`}
+              >
+                <Link to="/sign-up">Sign up</Link>
+              </li>
+              ) : null}
+
               <li
-                className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
-                  (pathMatchRoute("/sign-in") || pathMatchRoute("/profile")) &&
-                  "text-black border-b-red-500"
+                className={`cursor-pointer py-3 hover:text-red-400 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
+                  (activeHeader("/sign-in") || activeHeader("/profile") || activeHeader("/admin")) ? "text-red-500 border-t-4 border-t-red-500" : ""
                 }`}
               >
                 <div className="">
@@ -222,14 +255,14 @@ export default function Header({ children }) {
                   >
                     {pagestate}
                   </button>
-                  {popups.login && seen && pagestate === "Log in" && (
+                  {popups.login && pagestate === "Log in" && (
                     <Login toggle={calllog} />
                   )}
                 </div>
               </li>
             </ul>
           </div>
-        </div>
+        </div> 
 
         {/* for mobile */}
         <div className="md:hidden flex justify-between items-center px-3 max-w-6xl mx-auto">

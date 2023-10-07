@@ -14,6 +14,7 @@ import {
   getAllReservationData,
   saveTableResrv,
 } from "../../../utils/firebaseFunctions";
+import { useStateValue } from "../../../context/StateProvider";
 
 export default function TablePop({
   onDateSelect,
@@ -39,9 +40,7 @@ export default function TablePop({
   const [databaseReserv, setDatabaseReserv] = useState([]);
   const newdata = (data) => setDatabaseReserv(data);
   const [filter, setFilter] = useState(selectedTime);
-
-console.log(selectedTime);
-console.log(filter);
+  const [{ foodItem, user }, dispatch] = useStateValue();
   let filteredData;
   useEffect(() => {
     getAllReservationData().then(newdata);
@@ -76,13 +75,23 @@ console.log(filter);
   }, [selectDate.justdate, selectedTime]);
 
   useEffect(() => {
-    if (auth.currentUser)
+    if (user) {
       setResvData((prev) => ({
         ...prev,
-        user: auth.currentUser.displayName,
-        userEmail: auth.currentUser.email,
+        user: user.name || " ",
+        userEmail: user.email || " ",
       }));
-  }, [auth]);
+    } else {
+      // Handle the case when the user is not authenticated
+      // You can set default values for user and userEmail or show an error message.
+      setResvData((prev) => ({
+        ...prev,
+        user: " ", // Set a default value or show an error message
+        userEmail: " ", // Set a default value or show an error message
+      }));
+    }
+  }, [user]);
+  
 
   const handleOnChange = (e) => {
     if (e.target.id === "cont" || e.target.id === "close") {

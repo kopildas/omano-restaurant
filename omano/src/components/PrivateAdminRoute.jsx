@@ -32,10 +32,7 @@ useEffect(() => {
   if (checkingStatus) {
     return <Spinner />;
   }
-  console.log(idd);
-  console.log(initialState.user);
-  const em= initialState.user.email;
-  console.log(em);
+
   // return loggedIn ? <Outlet /> : <Navigate to = "/sign-up" />;
   // if (loggedIn && em === "kopildas451@gmail.com") {
     

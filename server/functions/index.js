@@ -7,8 +7,8 @@
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
 
-const {onRequest} = require("firebase-functions/v2/https");
-const logger = require("firebase-functions/logger");
+// const {onRequest} = require("firebase-functions/v2/https");
+// const logger = require("firebase-functions/logger");
 const functions = require("firebase-functions");
 
 // firebas admin
@@ -25,7 +25,7 @@ app.use(express.json());
 
 // cross orgin
 const cors = require("cors");
-app.use(cors({ origin: true }));
+app.use(cors({origin: true}));
 app.use((req, res, next) => {
   res.set("Access-Control-Allow-Origin", "*");
   next();

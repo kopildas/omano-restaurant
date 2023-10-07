@@ -78,7 +78,7 @@
   transition: all 0.5s;
 } */
 .active{
-  background: lightskyblue;
+  background: rgb(11, 69, 105);
   color: #000;
 }
 .icon, .link_text{

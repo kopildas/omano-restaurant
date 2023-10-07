@@ -14,8 +14,7 @@ export default function Reservation() {
   });
   const [options, setOptions] = useState([]); // Initialize options as a state variable
   const [selectedTime, setSelectedTime] = useState(null);
-  console.log(selectDate);
-  console.log(selectedTime);
+  
 
   const handleDateSelect = (date) => {
     setSelectDate((prev) => ({ ...prev, justdate: date }));

@@ -14,11 +14,7 @@ export default function PrivateRoute() {
   }
 
 
-  console.log(loggedIn);
-  console.log(idd);
-  console.log(initialState.user);
-  const em= initialState.user.email;
-  console.log(em);
+ 
   // return loggedIn ? <Outlet /> : <Navigate to = "/sign-up" />;
 
   

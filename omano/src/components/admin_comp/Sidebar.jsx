@@ -9,7 +9,9 @@ import {
   FaThList,
   FaUserAlt,
 } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useStateValue } from "../../context/StateProvider";
+import { actionType } from "../../context/reducer";
 
 export default function Sidebar({ children }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -48,12 +50,29 @@ export default function Sidebar({ children }) {
   ];
 
   const auth = getAuth();
-  function onLogOut(e) {
+  const [{ cartShow,cartItems,user }, dispatch] = useStateValue();
+  
+  const navigate = useNavigate();
+
+  function onLogOut() {
     localStorage.removeItem("user");
-    auth.signOut();
-    console.log(e);
-    console.log("sign out");
+    console.log(auth.currentUser);
+
+    auth
+      .signOut()
+      .then(() => {
+        dispatch({
+          type: actionType.DEL_USER,
+        });
+        console.log(auth.currentUser);
+        console.log("sign out");
+        navigate("/"); // Navigate to "/" after successful sign out
+      })
+      .catch((error) => {
+        console.error("Error signing out:", error);
+      });
   }
+  
 
   return (
     <div className="flex sticky z-40">
@@ -83,7 +102,7 @@ export default function Sidebar({ children }) {
             <NavLink
               to={item.path}
               key={index}
-              className="flex sticky items-center p-4 gap-4 text-white transition-all duration-500 hover:bg-lightBlue-500 hover:text-white"
+              className="flex sticky items-center p-4 gap-4 text-white transition-all duration-500 hover:bg-lightBlue-100 hover:text-white"
               activeClassName="active"
               end={true}
             >

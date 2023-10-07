@@ -1,12 +1,14 @@
+import { initialState } from "./initialState";
+
 export const actionType = {
   SET_USER: "SET_USER",
+  DEL_USER: "DEL_USER",
   SET_FOOD_ITEMS: "SET_FOOD_ITEMS",
   SET_CART_SHOW: "SET_CART_SHOW",
   SET_CART_ITEMS: "SET_CART_ITEMS",
 };
 
 const reducer = (state, action) => {
-  console.log(action);
 
   switch (action.type) {
     case actionType.SET_USER:
@@ -14,6 +16,11 @@ const reducer = (state, action) => {
         ...state,
         user: action.user,
       };
+      case actionType.DEL_USER:
+        return {
+          ...state,
+          user: null,
+        };
     case actionType.SET_FOOD_ITEMS:
       return {
         ...state,

@@ -22,18 +22,14 @@ export default function Calender({
     justdate: null,
     dateTime: null,
   });
-  console.log(date.justdate);
 
   const handleOnChange = (e) => {
     if (e.target.id === "cont" || e.target.id === "close" || date.justdate) {
-      // console.log(e);
-      console.log("jji");
       onClose();
     }
   };
 
   const handleCalendarClick = (date) => {
-    console.log(date);
     setDate((prev) => ({ ...prev, justdate: date }));
 
     if (date) {

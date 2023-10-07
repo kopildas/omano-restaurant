@@ -5,20 +5,19 @@ import { category } from "../admin_comp/Add_popup";
 import RowContainer from "./RowContainer";
 
 export default function Menu({ flag, data, scrollValue }) {
-  console.log(data);
   const rowContainer = useRef();
   const [filter, setFilter] = useState("Fast Food");
   useEffect(() => {
     rowContainer.current.scrollLeft += scrollValue;
   }, [scrollValue]);
 
-  console.log(category);
+ 
 
   return (
     <>
       <div
         ref={rowContainer}
-        className={`w-full flex items-center justify-center gap-1 p-20 scroll-smooth ${
+        className={`w-96 md:w-screen flex items-center justify-center p-14 md:p-20 gap-4 scroll-smooth  ${
           flag
             ? "overflow-x-scroll scrollbar-none"
             : "overflow-x-hidden flex-wrap"
@@ -30,18 +29,18 @@ export default function Menu({ flag, data, scrollValue }) {
               // key={category?.id}
               key={category?.value}
 
-              className={`w-full  flex justify-start lg:justify-center gap-1 scrollbar-none`}
+              className={`w-96 md:w-full b-red-300 flex items-center justify-center lg:justify-center scrollbar-none `}
               onClick={() => setFilter(category.value)}
             >
               <div
                 className={`group ${
-                  filter === category.value ? "bg-red-500" : "bg-slate-400"
-                } w-20 min-w[84px] h-28 cursor-pointer rounded-lg drop-shadow-xl flex flex-col gap-3 items-center justify-center duration-150 transition-all ease-in-out bg-[url('${category.label}')] bg-cover`}
+                  filter === category.value ? "border border-red-400 border-b-4 border-b-red-500" : "border border-gray-200"
+                } md:w-28 md:h-32 w-12 h-20 cursor-pointer rounded-lg drop-shadow-xl flex flex-col items-center justify-center duration-150 transition-all ease-in-out`}
               >
-                <div className="w-16 h-16">
+                <div className="w-8 h-8 md:w-16 md:h-16">
                   <img src={category.label} className="" alt="" />
                 </div>
-                <p className="text">{category.value}</p>
+                <p className="text text-sm md:text-lg">{category.value}</p>
               </div>
             </div>
           ))}

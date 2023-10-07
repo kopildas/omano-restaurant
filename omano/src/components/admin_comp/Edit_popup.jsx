@@ -12,7 +12,7 @@ import Spinner from "../Spinner";
 import { getAuth } from "firebase/auth";
 import { MdDeleteForever } from "react-icons/md";
 import { storage } from "../../firebase";
-import { editItem, saveItem } from "../../utils/firebaseFunctions";
+import { editItem } from "../../utils/firebaseFunctions";
 
 export const category = [
   { value: "Fast Food", label: "../public/images/burg.png" },
@@ -138,7 +138,6 @@ export default function Edit_popup({ data, visible, onClose, addDataNotifi }) {
         .catch((error) => {
           console.log(error);
         });
-     
     }
   };
 
@@ -160,6 +159,7 @@ export default function Edit_popup({ data, visible, onClose, addDataNotifi }) {
     ...formData,
     category: foods?.value || data.category, // If no foods is selected, default to an empty string
   };
+  console.log(formData);
   async function onSubmit(e) {
     e.preventDefault();
     setLoading(true);
@@ -181,7 +181,7 @@ export default function Edit_popup({ data, visible, onClose, addDataNotifi }) {
     //data saving method calling
     // await setDoc(doc(db, "foodItems", `${Date.now()}`), formData);
     // saveItem(formData);
-   editItem(formData, data.id)
+    editItem(formData, data.id);
     console.log("kire");
     console.log(formData);
     setTimeout(() => {
@@ -309,11 +309,7 @@ export default function Edit_popup({ data, visible, onClose, addDataNotifi }) {
             </div>
             <div className="text text-4xl">
               <div className="flex h-64 w-64 ">
-                <img
-                  className="h-64 w-64 absolute "
-                  src={images}
-                  alt=""
-                />
+                <img className="h-64 w-64 absolute " src={images} alt="" />
                 {images ? (
                   <MdDeleteForever
                     className="relative text-6xl flex items-center justify-center cursor-pointer"

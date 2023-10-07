@@ -13,6 +13,8 @@ export default function Foods() {
   const [sortt, setsortt] = useState("false");
   const [{ foodItem, cartShow }, dispatch] = useStateValue();
   const [foods, setFoods] = useState(foodItem);
+  console.log(foods);
+  console.log(foodItem);
   let [sortedFoods, setSortedFoods] = useState(foodItem); // Use a separate state variable for the sorted array
   const [text, setText] = useState("");
   const [priceArry, setPriceArry] = useState(0);
@@ -27,7 +29,6 @@ export default function Foods() {
   const priceFilter = (e) => {
     console.log(e.target.value);
     console.log(maxPrice);
-    console.log(foods);
     setPrice(e.target.value);
 
     // Convert the input value to a number
@@ -146,7 +147,7 @@ export default function Foods() {
       </div>
 
       <div className=" h-96">
-        <div className="h-5 mt-12 mb-16 ml-5 md:ml-32 bg-slate-600 ">
+        <div className="h-5 mt-12 mb-16 ml-5 md:ml-32 ">
           <div className="flex flex-col md:flex-row">
             <div className="">
               {/* search bar need control event loop */}
@@ -227,7 +228,7 @@ export default function Foods() {
             </div>
           </div>
 
-          <div className="flex flex-row mt-6">
+          <div className="flex flex-row">
             <div className=" md:h-auto ">
               {/* catagory in big screen */}
               <div className="bg-gray-100 rounded-md hidden md:flex">
@@ -282,7 +283,7 @@ export default function Foods() {
                     </div>
                   ))}
               </div>
-              <div className="mt-8 p-5 rounded-md bg-slate-100 hidden">
+              <div className="mt-8 p-5 rounded-md bg-slate-100 hidden md:block">
                 <p className="text-lg font-bold">Price filter</p>
                 <p className="text-sm font-semibold">${price}</p>
 
@@ -302,45 +303,54 @@ export default function Foods() {
                 <p>popular tags</p>
               </div>
             </div>
-            <div className=" mt-36 hidden md:flex">
+            <div className=" hidden md:flex">
               <div className="flex w-full ">
-                {view ? (
+                {foodItem !== null && (view ? (
                   <RowContainer
                     gridORlist={true}
                     flag={false}
                     onDataLengthChange={handleDataLengthChange}
-                    data={foods?.filter((n) => n.category === filter)}
+                    data={
+                      foodItem && foodItem?.filter((n) => n.category === filter)
+                    }
                   />
                 ) : (
                   <RowContainer
                     gridORlist={false}
                     flag={false}
                     onDataLengthChange={handleDataLengthChange}
-                    data={foods?.filter((n) => n.category === filter)}
+                    data={
+                      foodItem && foodItem?.filter((n) => n.category === filter)
+                    }
                   />
-                )}
+                ))}
               </div>
             </div>
           </div>
           <div className="flex md:hidden">
-              <div className="flex w-full ">
-                {view ? (
+            <div className="flex w-full ">
+              {foodItem !== null &&
+                (view ? (
                   <RowContainer
                     gridORlist={true}
                     flag={false}
                     onDataLengthChange={handleDataLengthChange}
-                    data={foods?.filter((n) => n.category === filter)}
+                    data={
+                      foodItem && foodItem?.filter((n) => n.category === filter)
+                    }
                   />
                 ) : (
                   <RowContainer
                     gridORlist={false}
                     flag={false}
                     onDataLengthChange={handleDataLengthChange}
-                    data={foods?.filter((n) => n.category === filter)}
+                    data={
+                      foodItem && foodItem?.filter((n) => n.category === filter)
+                    }
                   />
-                )}
-              </div>
+                ))}
             </div>
+          </div>
         </div>
       </div>
     </>

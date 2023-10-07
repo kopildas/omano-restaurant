@@ -4,10 +4,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { db } from "../firebase";
+import { useStateValue } from "../context/StateProvider";
+import { actionType } from "../context/reducer";
 
 export default function Profile() {
   const auth = getAuth();
-  console.log(auth.currentUser);
+  const [{ cartShow,cartItems,user }, dispatch] = useStateValue();
   const navigate = useNavigate();
   //for edit data
   const [changedetail, setChangeDetail] = useState(false);
@@ -20,8 +22,19 @@ export default function Profile() {
 
   function onLogOut() {
     localStorage.removeItem("user");
-    auth.signOut();
-    navigate("/");
+    auth
+    .signOut()
+    .then(() => {
+      dispatch({
+        type: actionType.DEL_USER,
+      });
+      console.log(auth.currentUser);
+      console.log("sign out");
+      navigate("/"); // Navigate to "/" after successful sign out
+    })
+    .catch((error) => {
+      console.error("Error signing out:", error);
+    });
   }
 
   // for edit button

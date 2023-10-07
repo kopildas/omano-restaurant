@@ -101,8 +101,8 @@ export default function CartitemComponenet({ item, id,setiingTotal }) {
 
 
   return (
-    <div className="w-full p-1 rounded-lg bg-gray-600 flex items-center ">
-      <div className="gap-2 h-20  flex ">
+    <div className="w-full p-5 md:p-2 rounded-lg bg-gray-600 flex items-center ">
+      <div className="md:gap-1 h-20 w-full flex items-center justify-around ">
         <div className="h-20 w-48 flex gap-1 items-center justify-center">
           <img src={item.images} className="w-16 h-16 rounded-full p-1" alt="" />
 
