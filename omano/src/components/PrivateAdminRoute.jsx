@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router";
 import { useAuthStatus } from "../hooks/useAuthStatus";
 import Login from "./Login";
@@ -12,24 +12,19 @@ export default function PrivateAdminRoute() {
 
   const [{user}, dispatch] = useStateValue();
   console.log(user);
+  const [useremail, setUseremail] = useState(null);
 
-
-useEffect(() => {
-
-  console.log(user);
-//   if (user && user.email === "kopildas451@gmail.com") {
-    
-//     return <Outlet />;
-  
-// } else {
-//   return <Home />;
-// }
-
-}, [user])
+  useEffect(()=> {
+    if(user)
+    {
+     setUseremail(user.email)
+    }
+   },[user])
 
   
   const { loggedIn, checkingStatus, idd } = useAuthStatus();
-  if (checkingStatus) {
+
+  if (checkingStatus || !useremail) {
     return <Spinner />;
   }
 
@@ -44,7 +39,7 @@ useEffect(() => {
   // return loggedIn ? <Outlet /> : <Login/>;
 
   console.log(user.email);
-  if (user && user.email === "testadmin01@gmail.com") {
+  if (loggedIn && useremail === "testadmin01@gmail.com") {
     return <Outlet />;
   
 } else {

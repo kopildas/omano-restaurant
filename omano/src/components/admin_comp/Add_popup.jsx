@@ -21,7 +21,7 @@ export const category = [
   { value: "Pasta", label: "../public/images/dinner.png" },
   { value: "Chicken", label: "../public/images/chicken.png" },
   { value: "Drinks", label: "../public/images/juice.png" },
-  { value: "Ice-Cream", label: "../public/images/ice.png" },
+  { value: "Icecream", label: "../public/images/ice.png" },
 ];
 
 export default function Add_popup({ visible, onClose,addDataNotifi }) {
@@ -254,8 +254,8 @@ export default function Add_popup({ visible, onClose,addDataNotifi }) {
       onClick={handleOnChange}
       className="fixed inset-0 flex items-center justify-center bg-opacity-5 backdrop-blur-sm"
     >
-      <div className="w-5/12 p-4 bg-white rounded-lg md:p-6">
-        <h1 className="text-xl font-semibold text-center text-gray-700 md-5">
+      <div className="w-5/12 p-4 bg-slate-200 rounded-lg md:p-6">
+        <h1 className="text-xl font-semibold mb-3 text-center text-gray-700 md-5">
           Add New Items
         </h1>
 

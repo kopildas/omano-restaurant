@@ -13,22 +13,20 @@ export default function Foods() {
   const [sortt, setsortt] = useState("false");
   const [{ foodItem, cartShow }, dispatch] = useStateValue();
   const [foods, setFoods] = useState(foodItem);
-  console.log(foods);
-  console.log(foodItem);
   let [sortedFoods, setSortedFoods] = useState(foodItem); // Use a separate state variable for the sorted array
   const [text, setText] = useState("");
   const [priceArry, setPriceArry] = useState(0);
   const [price, setPrice] = useState(0);
   const [maxPrFilter, setMaxPrFilter] = useState(0);
   const [length, setLength] = useState(0);
+  const [change, setChange] = useState(false)
 
   const handleDataLengthChange = (length) => {
     setLength(length);
   };
 
   const priceFilter = (e) => {
-    console.log(e.target.value);
-    console.log(maxPrice);
+    setChange(!change)
     setPrice(e.target.value);
 
     // Convert the input value to a number
@@ -41,34 +39,25 @@ export default function Foods() {
     }
 
     let foo = [...sortedFoods];
-    console.log(foo);
 
     if (selectedPrice === 0) {
       foo = foo.filter((curnt) => parseFloat(curnt.price) === selectedPrice);
-      console.log(selectedPrice);
     } else {
       foo = foo.filter((curnt) => parseFloat(curnt.price) <= selectedPrice);
-      console.log(selectedPrice);
     }
 
-    console.log("kk");
-    console.log(foo);
-    console.log(foo.length);
     setFoods(foo);
+    sorting;
+    updateSearchValue;
   };
 
   const updateSearchValue = (e) => {
+    setChange(!change)
     setText(e.target.value);
-    console.log(text);
-    console.log(foods);
-    console.log(foodItem);
     let foo = [...sortedFoods];
-    console.log(foo);
     foo = foo.filter((food) =>
       food.item_name.toLowerCase().includes(e.target.value)
     );
-    console.log("kk");
-    console.log(foo);
     setFoods(foo);
     // setLength(foo.length);
   };
@@ -77,30 +66,24 @@ export default function Foods() {
   let maxPrice = 0;
 
   useEffect(() => {
-    console.log(foods);
-    console.log(foodItem);
     if (foodItem !== null) {
       setPriceArry(foodItem.map((curElm) => curElm.price));
-      setSortedFoods(foodItem);
-      console.log(priceArry);
-      console.log(foodItem);
-      setFoods(foodItem);
+      setSortedFoods(foodItem?.filter((n) => n.category === filter));
+      setFoods(foodItem?.filter((n) => n.category === filter));
     }
-    console.log(priceArry);
-    console.log(foods);
-  }, [foodItem]);
+  }, [foodItem,filter]);
 
   if (priceArry !== 0) {
     maxPrice = Math.max(...priceArry);
     // setMaxPrice(Math.max(...priceArry))
   }
-  console.log(maxPrice);
 
   const sorting = (e) => {
     e.preventDefault();
+    setChange(!change)
 
     // Create a copy of the sortedFoods array
-    let sortedFoodsCopy = [...sortedFoods];
+    let sortedFoodsCopy = [...foods];
 
     if (text) {
       sortedFoodsCopy = sortedFoodsCopy.filter((food) =>
@@ -126,10 +109,8 @@ export default function Foods() {
     }
 
     setsortt(true);
-    console.log(sortedFoodsCopy);
-    console.log(foodItem);
     setFoods(sortedFoodsCopy); // Update the state with the sorted array
-    setSortedFoods(sortedFoodsCopy);
+    // setSortedFoods(sortedFoodsCopy);
   };
 
   return (
@@ -305,13 +286,13 @@ export default function Foods() {
             </div>
             <div className=" hidden md:flex">
               <div className="flex w-full ">
-                {foodItem !== null && (view ? (
+                {foods !== null && (view ? (
                   <RowContainer
                     gridORlist={true}
                     flag={false}
                     onDataLengthChange={handleDataLengthChange}
                     data={
-                      foodItem && foodItem?.filter((n) => n.category === filter)
+                      foods
                     }
                   />
                 ) : (
@@ -320,7 +301,7 @@ export default function Foods() {
                     flag={false}
                     onDataLengthChange={handleDataLengthChange}
                     data={
-                      foodItem && foodItem?.filter((n) => n.category === filter)
+                      foods
                     }
                   />
                 ))}
@@ -329,14 +310,14 @@ export default function Foods() {
           </div>
           <div className="flex md:hidden">
             <div className="flex w-full ">
-              {foodItem !== null &&
+              {foods !== null &&
                 (view ? (
                   <RowContainer
                     gridORlist={true}
                     flag={false}
                     onDataLengthChange={handleDataLengthChange}
                     data={
-                      foodItem && foodItem?.filter((n) => n.category === filter)
+                      foods
                     }
                   />
                 ) : (
@@ -345,7 +326,7 @@ export default function Foods() {
                     flag={false}
                     onDataLengthChange={handleDataLengthChange}
                     data={
-                      foodItem && foodItem?.filter((n) => n.category === filter)
+                      foods
                     }
                   />
                 ))}

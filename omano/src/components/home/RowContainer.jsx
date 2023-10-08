@@ -18,7 +18,7 @@ export default function RowContainer({
   const [updatedItem, setUpdatedItem] = useState([]);
   const [{ cartItems }, dispatch] = useStateValue();
   const navigate = useNavigate();
-
+console.log(data);
 
   const cartDispatch = () => {
     // localStorage.setItem("cartItems", JSON.string(updatedItem));
@@ -103,7 +103,7 @@ export default function RowContainer({
       {/* laptop view */}
       <div
         ref={rowContainer}
-        className={`w-full hidden md:flex  items-center my-10 gap-6 md:gap-7 p-1 scroll-smooth ${
+        className={`w-full hidden md:flex  items-center my-10 p-5 gap-6 md:gap-7 p-1 scroll-smooth ${
           flag
             ? "overflow-x-scroll scrollbar-none scroll-auto"
             : "overflow-x-hidden flex flex-wrap justify-center"
