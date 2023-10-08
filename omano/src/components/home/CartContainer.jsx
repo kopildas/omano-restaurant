@@ -103,7 +103,7 @@ export default function CartContainer() {
               <motion.button
                 whileTap={{ scale: 0.8 }}
                 type="button"
-                className="w-full h-20 text-3xl md:text-lg md:h-10 rounded-full bg-gradient-to-t from-orange-400 to-orange-600 text-gray-50  hover:shadow-lg "
+                className="w-full h-20 text-3xl md:text-lg md:h-10 rounded-full bg-orange-500 text-gray-50  hover:shadow-lg "
               >
                 Check Out
               </motion.button>
@@ -111,7 +111,7 @@ export default function CartContainer() {
               <motion.button
                 whileTap={{ scale: 0.8 }}
                 type="button"
-                className="w-full h-20 text-3xl md:text-lg md:h-10 rounded-full bg-gradient-to-t from-orange-400 to-orange-600 text-gray-50 my-2 hover:shadow-lg "
+                className="w-full h-20 text-3xl md:text-lg md:h-10 rounded-full bg-orange-500 text-gray-50 my-2 hover:shadow-lg "
               >
                 Login to Check Out
               </motion.button>

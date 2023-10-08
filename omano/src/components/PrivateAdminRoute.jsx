@@ -43,8 +43,8 @@ useEffect(() => {
   // }
   // return loggedIn ? <Outlet /> : <Login/>;
 
-  if (user && user.email === "kopildas451@gmail.com") {
-    
+  console.log(user.email);
+  if (user && user.email === "testadmin01@gmail.com") {
     return <Outlet />;
   
 } else {
