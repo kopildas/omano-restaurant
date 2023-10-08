@@ -154,7 +154,10 @@ useEffect(() => {
           </div>
           <OAuth />
         </form>
-        <button onClick={toggle}>Close</button>
+        <div className="flex items-center justify-center mt-5 ">
+        <button className="bg-red-500 w-12 h-12 text-white rounded-lg" onClick={toggle}>Close</button>
+
+        </div>
       </div>
     </div>
   );

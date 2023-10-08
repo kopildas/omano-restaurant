@@ -25,9 +25,9 @@ if (number < 1000) {
       };
 
       const response = await db.collection("reviews").doc(`/${id}/`).set(data);
-      return res.status(200).send({ success: true, data: response });
+      return res.status(200).send({success: true, data: response});
     } catch (e) {
-      return res.send({ success: false, msg: `error: ${e}` });
+      return res.send({success: false, msg: `error: ${e}`});
     }
   });
 
@@ -41,15 +41,15 @@ if (number < 1000) {
         let response = null;
         await query.get().then((uerySnapshot) => {
           response = uerySnapshot.docs
-            .filter((doc) => doc.data().food_id === productId)
-            .sort((a, b) => b.id - a.id)
-            .map((doc) => ({ ...doc.data(), id: doc.id }));
+              .filter((doc) => doc.data().food_id === productId)
+              .sort((a, b) => b.id - a.id)
+              .map((doc) => ({...doc.data(), id: doc.id}));
 
           return response;
         });
-        return res.status(200).send({ success: true, data: response });
+        return res.status(200).send({success: true, data: response});
       } catch (e) {
-        return res.send({ success: false, msg: `error: ${e}` });
+        return res.send({success: false, msg: `error: ${e}`});
       }
     })();
   });
@@ -70,9 +70,9 @@ if (number < 1000) {
 
           return response;
         });
-        return res.status(200).send({ success: true, data: response });
+        return res.status(200).send({success: true, data: response});
       } catch (e) {
-        return res.send({ success: false, msg: `error: ${e}` });
+        return res.send({success: false, msg: `error: ${e}`});
       }
     })();
   });
@@ -93,14 +93,14 @@ if (number < 1000) {
     };
     try {
       await db
-        .collection("reviews")
-        .doc(`/${productId}/`)
-        .update(data)
-        .then((response) => {
-          return res.status(200).send({ success: true, data: response });
-        });
+          .collection("reviews")
+          .doc(`/${productId}/`)
+          .update(data)
+          .then((response) => {
+            return res.status(200).send({success: true, data: response});
+          });
     } catch (e) {
-      return res.send({ success: false, msg: `error: ${e}` });
+      return res.send({success: false, msg: `error: ${e}`});
     }
   });
 }

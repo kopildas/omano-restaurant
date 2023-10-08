@@ -12,21 +12,23 @@ if (number < 1000) {
   router.get("/jwtVerifi", async (req, res) => {
     console.log("user api " + number++);
     if (!req.headers.authorization) {
-      return res.status(500).send({ msg: "Token not found" });
+      return res.status(500).send({
+        msg: "Token not found",
+      });
     }
     const token = req.headers.authorization.split(" ")[1];
     try {
       const decodedTok = await admin.auth().verifyIdToken(token);
       if (!decodedTok) {
         return res
-          .status(500)
-          .json({ success: false, msg: "Unauthorized access!" });
+            .status(500)
+            .json({success: false, msg: "Unauthorized access!"});
       }
-      return res.status(200).json({ sucess: true, data: decodedTok });
+      return res.status(200).json({sucess: true, data: decodedTok});
     } catch (error) {
       return res
-        .status(500)
-        .json({ success: false, msg: `Error in the token : ${error}` });
+          .status(500)
+          .json({success: false, msg: `Error in the token : ${error}`});
     }
   });
 
@@ -38,25 +40,25 @@ if (number < 1000) {
       const data = [];
 
       admin
-        .auth()
-        .listUsers(1000, nextPageToken)
-        .then((listUsersResult) => {
-          listUsersResult.users.forEach((userRecord) => {
-            data.push(userRecord.toJSON());
-          });
-          if (listUsersResult.pageToken) {
+          .auth()
+          .listUsers(1000, nextPageToken)
+          .then((listUsersResult) => {
+            listUsersResult.users.forEach((userRecord) => {
+              data.push(userRecord.toJSON());
+            });
+            if (listUsersResult.pageToken) {
             // List next batch of users.
-            listAllUsers(listUsersResult.pageToken)
-              .then((nextPageData) => {
-                data.push(...nextPageData); // Append data from the next page
-                resolve(data);
-              })
-              .catch(reject);
-          } else {
-            resolve(data);
-          }
-        })
-        .catch(reject);
+              listAllUsers(listUsersResult.pageToken)
+                  .then((nextPageData) => {
+                    data.push(...nextPageData);
+                    resolve(data);
+                  })
+                  .catch(reject);
+            } else {
+              resolve(data);
+            }
+          })
+          .catch(reject);
     });
   };
 
@@ -66,12 +68,12 @@ if (number < 1000) {
     try {
       const users = await listAllUsers();
       console.log(users.length);
-      return res.status(200).send({ success: true, data: users });
+      return res.status(200).send({success: true, data: users});
     } catch (e) {
       console.log(e);
       return res
-        .status(500)
-        .send({ success: false, msg: `Error: ${e.message}` });
+          .status(500)
+          .send({success: false, msg: `Error: ${e.message}`});
     }
   });
 
@@ -84,12 +86,12 @@ if (number < 1000) {
       console.log(users.length);
       users = users.filter((doc) => doc.uid === speciuser);
       console.log(users.length);
-      return res.status(200).send({ success: true, data: users });
+      return res.status(200).send({success: true, data: users});
     } catch (e) {
       console.log(e);
       return res
-        .status(500)
-        .send({ success: false, msg: `Error: ${e.message}` });
+          .status(500)
+          .send({success: false, msg: `Error: ${e.message}`});
     }
   });
 
@@ -101,19 +103,19 @@ if (number < 1000) {
 
     try {
       // First, check if the user exists
-      const userRecord = await admin.auth().getUser(userToDelete);
+      // const userRecord = await admin.auth().getUser(userToDelete);
 
       // If the user exists, proceed to delete
       await admin.auth().deleteUser(userToDelete);
 
       return res
-        .status(200)
-        .send({ success: true, msg: "User deleted successfully" });
+          .status(200)
+          .send({success: true, msg: "User deleted successfully"});
     } catch (e) {
       console.log(e);
       return res
-        .status(500)
-        .send({ success: false, msg: `Error: ${e.message}` });
+          .status(500)
+          .send({success: false, msg: `Error: ${e.message}`});
     }
   });
 
@@ -127,19 +129,19 @@ if (number < 1000) {
 
     try {
       // First, check if the user exists
-      const userRecord = await admin.auth().getUser(userToEdit);
+      // const userRecord = await admin.auth().getUser(userToEdit);
 
       // If the user exists, proceed to update user data
       await admin.auth().updateUser(userToEdit, newData);
 
       return res
-        .status(200)
-        .send({ success: true, msg: "User updated successfully" });
+          .status(200)
+          .send({success: true, msg: "User updated successfully"});
     } catch (e) {
       console.log(e);
       return res
-        .status(500)
-        .send({ success: false, msg: `Error: ${e.message}` });
+          .status(500)
+          .send({success: false, msg: `Error: ${e.message}`});
     }
   });
 }

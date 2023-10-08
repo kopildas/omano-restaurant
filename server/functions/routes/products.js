@@ -30,12 +30,12 @@ if (number < 1000) {
       //   merge: true,
       // });
       const response = await db
-        .collection("foodItems")
-        .doc(`/${id}/`)
-        .set(data);
-      return res.status(200).send({ success: true, data: response });
+          .collection("foodItems")
+          .doc(`/${id}/`)
+          .set(data);
+      return res.status(200).send({success: true, data: response});
     } catch (e) {
-      return res.send({ success: false, msg: `error: ${e}` });
+      return res.send({success: false, msg: `error: ${e}`});
     }
   });
 
@@ -49,13 +49,13 @@ if (number < 1000) {
         let response = null;
         await query.get().then((uerySnapshot) => {
           response = uerySnapshot.docs
-            .map((doc) => ({ ...doc.data(), id: doc.id }))
-            .sort((a, b) => b.id - a.id);
+              .map((doc) => ({...doc.data(), id: doc.id}))
+              .sort((a, b) => b.id - a.id);
           return response;
         });
-        return res.status(200).send({ success: true, data: response });
+        return res.status(200).send({success: true, data: response});
       } catch (e) {
-        return res.send({ success: false, msg: `error: ${e}` });
+        return res.send({success: false, msg: `error: ${e}`});
       }
     })();
   });
@@ -67,14 +67,14 @@ if (number < 1000) {
     const productId = req.params.productId;
     try {
       await db
-        .collection("foodItems")
-        .doc(`/${productId}/`)
-        .delete()
-        .then((response) => {
-          return res.status(200).send({ success: true, data: response });
-        });
+          .collection("foodItems")
+          .doc(`/${productId}/`)
+          .delete()
+          .then((response) => {
+            return res.status(200).send({success: true, data: response});
+          });
     } catch (e) {
-      return res.send({ success: false, msg: `error: ${e}` });
+      return res.send({success: false, msg: `error: ${e}`});
     }
   });
 
@@ -95,14 +95,14 @@ if (number < 1000) {
     };
     try {
       await db
-        .collection("foodItems")
-        .doc(`/${productId}/`)
-        .update(data)
-        .then((response) => {
-          return res.status(200).send({ success: true, data: response });
-        });
+          .collection("foodItems")
+          .doc(`/${productId}/`)
+          .update(data)
+          .then((response) => {
+            return res.status(200).send({success: true, data: response});
+          });
     } catch (e) {
-      return res.send({ success: false, msg: `error: ${e}` });
+      return res.send({success: false, msg: `error: ${e}`});
     }
   });
 }
