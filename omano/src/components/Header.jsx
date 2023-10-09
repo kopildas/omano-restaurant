@@ -76,7 +76,7 @@ export default function Header({ children }) {
 
   useEffect(() => {
       
-      if (user && user.email === "testadmin01@gmail.com") {
+      if (user && user.email === "testadminn@gmail.com") {
         setPageState("Admin");
         setSeen(!seen);
       } else if (user) {

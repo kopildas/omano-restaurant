@@ -12,7 +12,7 @@ export default function PrivateAdminRoute() {
 
   const [{user}, dispatch] = useStateValue();
   console.log(user);
-  const [useremail, setUseremail] = useState(null);
+  const [useremail, setUseremail] = useState (null);
 
   useEffect(()=> {
     if(user)
@@ -36,10 +36,10 @@ export default function PrivateAdminRoute() {
   // } else {
   //   return <Home />;
   // }
-  // return loggedIn ? <Outlet /> : <Login/>;
+  // return loggedIn ? <Outlet /> : <Login/>;tes01dance
 
   console.log(user.email);
-  if (loggedIn && useremail === "testadmin01@gmail.com") {
+  if (loggedIn && useremail === "testadminn@gmail.com") {
     return <Outlet />;
   
 } else {

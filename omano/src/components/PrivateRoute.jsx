@@ -35,7 +35,7 @@ export default function PrivateRoute() {
 
   
   if (loggedIn && useremail) {
-    if (useremail === "testadmin01@gmail.com") {
+    if (useremail === "testadminn@gmail.com") {
       return <Admin />;
     } else {
       return <Profile />;
