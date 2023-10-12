@@ -1,5 +1,5 @@
 # omano-restaurant
-this is a restaurant booking and food ordering website using react and tailwind css
+this is a restaurant booking and food ordering website using react and tailwind css.
 For accessing admin panel please login via given below username and password,
 
 username: testadminn@gmail.com
