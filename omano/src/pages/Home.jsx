@@ -26,10 +26,10 @@ export default function Home() {
     <div>
       <Hero />
 
-      <section className="w-full mt-14 md:mt-20">
+      <section className="w-full mt-10 md:mt-20">
       <div className="flex flex-col items-center justify-center w-full">
           <p className="md:text-lg text-red-500">BEST FOOD MENU</p>
-          <p className="relative md:text-5xl text-2xl mb-20 font-semibold capitalize before:absolute">
+          <p className="relative md:text-5xl text-2xl mb-20 md:-mb-10 font-semibold capitalize before:absolute">
             Our Popular Food Items
           </p>
         </div>
