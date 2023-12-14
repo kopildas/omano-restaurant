@@ -16,12 +16,12 @@ import { saveItem } from "../../utils/firebaseFunctions";
 import { addNewProduct } from "../../api";
 
 export const category = [
-  { value: "Fast Food", label: "../public/images/burg.png" },
-  { value: "Biriyani", label: "../public/images/lunch.png" },
-  { value: "Pasta", label: "../public/images/dinner.png" },
-  { value: "Chicken", label: "../public/images/chicken.png" },
-  { value: "Drinks", label: "../public/images/juice.png" },
-  { value: "Icecream", label: "../public/images/ice.png" },
+  { value: "Fast Food", label: "https://i.ibb.co/brJpr0D/burg.png" },
+  { value: "Biriyani", label: "https://i.ibb.co/6gwBTBX/chicken-biryani-traditional-indian-cuisine-png.webp" },
+  { value: "Pasta", label: "https://i.ibb.co/ByRb7PH/pngtree-spaghetti-vector-element-png-image-4158219-removebg-preview.png" },
+  { value: "Chicken", label: "https://i.ibb.co/vXhsgrt/chicken.png" },
+  { value: "Drinks", label: "https://i.ibb.co/tcxn9hr/juice.png" },
+  { value: "Icecream", label: "https://i.ibb.co/N6Vy27P/ice.png" },
 ];
 
 export default function Add_popup({ visible, onClose,addDataNotifi }) {
