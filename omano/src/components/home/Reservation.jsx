@@ -63,8 +63,8 @@ export default function Reservation() {
   }, [tablePop]);
 
   return (
-    <div>
-      <div className="bg-[url('../public/images/booking.jpg')] md:-ml-[400px] min-w-[200px] rounded-r-full bg-fixed" style={{ backgroundSize: 'cover', height: '400px' }}>
+    <div className="flex items-center justify-between ">
+      <div className="bg-[url('../public/images/booking.jpg')] md:-ml-[400px] min-w-[200px] rounded-r-full bg-fixed z-20" style={{ backgroundSize: 'cover', height: '400px' }}>
         <div className="md:p-20 opacity-100">
         <div className="flex items-start p-4 md:p-0 justify-center flex-col text-white ">
           <p className="text mt-5 md:mt-0 text-red-500 font-medium font-mono text-xl md:text-2xl">Booking Table</p>
@@ -151,6 +151,12 @@ export default function Reservation() {
             </div>
           </form>
         </div>
+        </div>
+      </div>
+      <div className="absolute bg-red-30 z-10 overflow-hidden ">
+        <div className=" transform scale-100 overflow-visible">
+        <img src="https://i.ibb.co/y5HyBkg/43-435259-healthy-food-clipart-free-vector-art-stock-graphics-removebg-preview.png" alt="" className="o object-cover ml-64"/>
+
         </div>
       </div>
     </div>
